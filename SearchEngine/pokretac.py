@@ -5,7 +5,7 @@ Modul koji predstavlja pokretacki deo aplikacije.
 from Graph import Graph
 from parserTrie.loadTriefromHTML import loadTrieViaHTML
 import fnmatch, re
-
+from set import Set
 
 
 def graph_from_edgelist(E, directed=False):
@@ -70,8 +70,12 @@ if __name__ == '__main__':
                print("Putanja nije validna!")
                unos = ''
 
+    #Testiranje set-a i magicnih metoda
+    a = Set(["pufke", "vladislav"])
+    b = Set(["pufke", "ana"])
 
-
+    c = a | b
+    print(c)
 
     # # instanca stabla
     # t = Tree()
