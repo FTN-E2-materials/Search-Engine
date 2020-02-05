@@ -42,7 +42,7 @@ class TreeNode(object):
         self.children.append(x)
 
     def __str__(self):
-        return str(self.data)
+        return str(self.char)
 
 
 class Tree(object):
@@ -92,7 +92,7 @@ class Tree(object):
         - `x`: čvor od koga počinje obilazak
         """
         if not self.is_empty():
-            print(x.data)
+            print(x.char)
             for c in x.children:
                 self.preorder(c)
 
@@ -108,7 +108,7 @@ class Tree(object):
         if not self.is_empty():
             for c in x.children:
                 self.postorder(c)
-            print(x.data)
+            print(x.char)
 
     def breadth_first(self):
         """
@@ -118,7 +118,7 @@ class Tree(object):
         to_visit.enqueue(self.root)
         while not to_visit.is_empty():
             e = to_visit.dequeue()
-            print(e.data)
+            print(e.char)
 
             for c in e.children:
                 to_visit.enqueue(c)

@@ -4,6 +4,7 @@ Modul koji predstavlja pokretacki deo aplikacije.
 """
 from Graph import Graph
 from parserTrie.loadTriefromHTML import loadTrieViaHTML
+from parserTrie.Tree import *
 import fnmatch, re
 from set import Set
 
@@ -50,7 +51,9 @@ def figure_14_15():
 
 
 if __name__ == '__main__':
-
+    stablo = Tree()
+    # C:\Users\Vaxi\Desktop\Desktop\FAKS\3 godina\5-semestar\OISISI-Projekat[Python]\OISISI-drugi-projektni-zadatak\SearchEngine
+    # C:\Users\Vaxi\Desktop\Desktop\FAKS\3 godina\5-semestar\OISISI-Projekat[Python]\OISISI-drugi-projektni-zadatak\SearchEngine\test-skup\python-2.7.7-docs-html\tutorial
     unos = ''
     #petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
@@ -65,10 +68,14 @@ if __name__ == '__main__':
         if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj.match(unos):
                print("Validna putanja!")
-               loadTrieViaHTML(unos)
+               stablo = loadTrieViaHTML(unos)
             else:
                print("Putanja nije validna!")
                unos = ''
+
+    # obilazak po dubini - preorder
+    print('PREORDER')
+    stablo.preorder(stablo.root)
 
     #Testiranje set-a i magicnih metoda
     a = Set(["pufke", "vladislav"])
@@ -85,4 +92,3 @@ if __name__ == '__main__':
     # a = TreeNode(1)
     # b = TreeNode(2)
     # c = TreeNode(3)
-555
