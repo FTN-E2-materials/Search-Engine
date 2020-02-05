@@ -55,12 +55,10 @@ if __name__ == '__main__':
     #petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
         regexPattern1 = fnmatch.translate('[A-Z]:\*')
-        regexPattern2 = fnmatch.translate('\*')
+        regexPattern2 = fnmatch.translate('/*')
         # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
         regexObj1 = re.compile(regexPattern1)
         regexObj2 = re.compile(regexPattern2)
-        # Unos
-        print("INFO: Korenski direktorijum mora da bude smesten u Local Disk C i putanja treba da izgleda na sledeci nacin: C:\\xxxxxxxxx.... ")
         print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
         unos = input()
         if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
