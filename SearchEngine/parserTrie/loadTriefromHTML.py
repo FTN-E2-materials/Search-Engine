@@ -4,11 +4,11 @@ import time
 from parserTrie.Tree import *
 from parserTrie.Parser import Parser
 
-def loadTrieViaHTML():
+def loadTrieViaHTML(path):
     trie = Tree()
     parser = Parser()
 
-    path = "C:\\Users\\Pufke\\Desktop\\OISISI-drugi-projektni-zadatak\\SearchEngine\\test-skup\\python-2.7.7-docs-html"
+    #path = "C:\\Users\\Pufke\\Desktop\\OISISI-drugi-projektni-zadatak\\SearchEngine\\test-skup\\python-2.7.7-docs-html"
 
     start = time.time()
     """

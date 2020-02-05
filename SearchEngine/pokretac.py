@@ -4,6 +4,7 @@ Modul koji predstavlja pokretacki deo aplikacije.
 """
 from Graph import Graph
 from parserTrie.loadTriefromHTML import loadTrieViaHTML
+import fnmatch, re
 
 
 
@@ -50,6 +51,28 @@ def figure_14_15():
 
 if __name__ == '__main__':
 
+    unos = ''
+    #petlja ce da se izvrsava sve dok korisnik ne unese nesto
+    while unos == '':
+        regexPattern = fnmatch.translate('C:\*')
+        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
+        regexObj = re.compile(regexPattern)
+
+        # Unos
+        print("INFO: Korenski direktorijum mora da bude smesten u Local Disk C i putanja treba da izgleda na sledeci nacin: C:\\xxxxxxxxx.... ")
+        print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
+        unos = input()
+        if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
+            if regexObj.match(unos):
+               print("Validna putanja!")
+               loadTrieViaHTML(unos)
+            else:
+               print("Putanja nije validna!")
+               unos = ''
+
+
+
+
     # # instanca stabla
     # t = Tree()
     # t.root = TreeNode(0)
@@ -58,42 +81,4 @@ if __name__ == '__main__':
     # a = TreeNode(1)
     # b = TreeNode(2)
     # c = TreeNode(3)
-
-    # a.add_child(b)
-    # t.root.add_child(a)
-    # t.root.add_child(c)
-
-    # # visina stabla
-    # print('Visina = %d' % t.height(t.root))
-
-    # # dubina čvora
-    # print('Dubina(a) = %d' % t.depth(a))
-
-    # # obilazak po dubini - preorder
-    # print('PREORDER')
-    # t.preorder(t.root)
-
-    # # obilazak po dubini - postorder
-    # print('POSTORDER')
-    # t.postorder(t.root)
-
-    # # obilazak po širini
-    # print('BREADTH FIRST')
-    # t.breadth_first()
-
-    # print("ITER")
-    # for node in t:
-    #     print(node)
-
-    # Testiranje grafa , ispisivanje svih cvorova
-    graf = figure_14_15()
-    for v in graf.vertices():
-        print(v)
-
-    # Testiranje grafa , ispisivanje svih cvorova
-    for e in graf.edges():
-        print(e)
-
-    #Parsiranje svih HTML fajlova i smestanje u TRIE
-    trie = loadTrieViaHTML()
-
+555
