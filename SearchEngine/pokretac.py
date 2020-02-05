@@ -57,16 +57,15 @@ if __name__ == '__main__':
     unos = ''
     #petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
-        regexPattern = fnmatch.translate('C:\*')
+        regexPattern1 = fnmatch.translate('[A-Z]:\*')
+        regexPattern2 = fnmatch.translate('/*')
         # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
-        regexObj = re.compile(regexPattern)
-
-        # Unos
-        print("INFO: Korenski direktorijum mora da bude smesten u Local Disk C i putanja treba da izgleda na sledeci nacin: C:\\xxxxxxxxx.... ")
+        regexObj1 = re.compile(regexPattern1)
+        regexObj2 = re.compile(regexPattern2)
         print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
         unos = input()
         if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
-            if regexObj.match(unos):
+            if regexObj1.match(unos) or regexObj2.match(unos):
                print("Validna putanja!")
                stablo = loadTrieViaHTML(unos)
             else:
