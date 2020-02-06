@@ -19,6 +19,8 @@ def loadGraphFromParser(path):
         Loop se ponavlja za svaki .html fajl dok ne popunimo drvo u potpunosti.
     """
 
+    E = []
+
     for root, dirs, files in os.walk(path, topdown = False):
         for filename in files:
             if r".html" in filename:
@@ -27,9 +29,10 @@ def loadGraphFromParser(path):
                 parser.parse(os.path.join(root, filename))
                 print(filename + " " + str(parser.links.__len__()))
                 for links in parser.links:
-                    add_element_to_Graph(g,absPath,links)
+                    E.append([absPath,links])
+                    #add_element_to_Graph(g,absPath,links)
                     #print(links)
-
+                g = add_elements_to_Graph(E, directed)
     end = time.time()
     print("Parsed files and loaded the Graph structure in " + str((end - start).__round__(2  )) + " seconds.")
 
