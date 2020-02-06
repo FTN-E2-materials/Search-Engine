@@ -2,13 +2,16 @@
 Modul koji predstavlja pokretacki deo aplikacije.
 
 """
-from parserTrie.loadTriefromHTML import loadTrieViaHTML
+from SearchEngine.parserTrie.loadTriefromHTML import loadTrieViaHTML
+from SearchEngine.parserTrie.Tree import *
 import fnmatch, re
-from set import Set
-from parserTrie.Parser import *
+from SearchEngine.parserTrie.Parser import *
 from SearchEngine.parserGraph.loadGraphFromParser import loadGraphFromParser
 
 if __name__ == '__main__':
+
+    stablo = Tree()
+
     unos = ''
     #petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
@@ -22,7 +25,9 @@ if __name__ == '__main__':
         if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj1.match(unos) or regexObj2.match(unos):
                print("Validna putanja!")
-               loadTrieViaHTML(unos)
+
+               stablo = loadTrieViaHTML(unos)
+
                g = loadGraphFromParser(unos)
                #Testiranje grafa , ispisivanje svih cvorova
                for v in g.vertices():
@@ -30,30 +35,9 @@ if __name__ == '__main__':
                # Testiranje grafa , ispisivanje svih listova
                for e in g.edges():
                     print(e)
+
+
             else:
                print("Putanja nije validna!")
                unos = ''
 
-    # #Testiranje set-a i magicnih metoda
-    # a = Set(["pufke", "vladislav"])
-    # b = Set(["pufke", "ana"])
-    #
-    # c = a | b
-    # print(c)
-
-    # # Testiranje grafa , ispisivanje svih cvorova
-    # for v in g.vertices():
-    #     print(v)
-    #
-    # # Testiranje grafa , ispisivanje svih listova
-    # for e in g.edges():
-    #     print(e)
-    # # instanca stabla
-    # t = Tree()
-    # t.root = TreeNode(0)
-
-    # # kreiranje relacija između novih čvorova
-    # a = TreeNode(1)
-    # b = TreeNode(2)
-    # c = TreeNode(3)
-555

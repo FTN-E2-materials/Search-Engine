@@ -1,8 +1,10 @@
 import os
 import time
 
-from parserTrie.Tree import *
-from parserTrie.Parser import Parser
+from SearchEngine.parserTrie.Tree import *
+from SearchEngine.parserTrie.Parser import Parser
+from SearchEngine.parserTrie.Tree import TreeNode
+
 
 def loadTrieViaHTML(path):
     trie = Tree()
