@@ -3,8 +3,8 @@ Modul koji predstavlja pokretacki deo aplikacije.
 
 """
 from Graph import Graph
-from parserTrie.loadTriefromHTML import loadTrieViaHTML
-from parserTrie.Tree import *
+from parserTrie.loadTriefromHTML import *
+from parserTrie.proveriRec import *
 import fnmatch, re
 from set import Set
 
@@ -54,6 +54,7 @@ if __name__ == '__main__':
     stablo = Tree()
     # C:\Users\Vaxi\Desktop\Desktop\FAKS\3 godina\5-semestar\OISISI-Projekat[Python]\OISISI-drugi-projektni-zadatak\SearchEngine
     # C:\Users\Vaxi\Desktop\Desktop\FAKS\3 godina\5-semestar\OISISI-Projekat[Python]\OISISI-drugi-projektni-zadatak\SearchEngine\test-skup\python-2.7.7-docs-html\tutorial
+    # C:\Users\Vaxi\Desktop\Desktop\FAKS\3 godina\5-semestar\OISISI-Projekat[Python]\OISISI-drugi-projektni-zadatak\SearchEngine\test-skup\python-2.7.7-docs-html\AOBRISIOVO
     unos = ''
     #petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
@@ -66,28 +67,87 @@ if __name__ == '__main__':
         unos = input()
         if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj1.match(unos) or regexObj2.match(unos):
-               print("Validna putanja!")
+               # print("Validna putanja!")
                stablo = loadTrieViaHTML(unos)
             else:
                print("Putanja nije validna!")
                unos = ''
 
-    # obilazak po dubini - preorder
-    print('PREORDER')
-    stablo.preorder(stablo.root)
+    unosUpit=''
+    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
+    while unosUpit == '':
+        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
+        regexObj111 = re.compile("(([\w]+\s){1}(and|or|not)(\s[\w]+){1})|([\w\s]+)")
 
-    #Testiranje set-a i magicnih metoda
-    a = Set(["pufke", "vladislav"])
-    b = Set(["pufke", "ana"])
+        print("Unesite pretragu:")
+        unosUpit = input()
+        if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
+            if regexObj111.fullmatch(unosUpit):
+                print("Uneli ste validnu pretragu.")
+            else:
+                print("Niste uneli validnu pretragu!")
+                unosUpit = ''
 
-    c = a | b
-    print(c)
+    #print(unosUpit)
+    unesene_reci = unosUpit.split( )
+    #print(unesene_reci)
+    if 'and' in unesene_reci:
+        # print("IMAMO AND OPERATOR")
+        index = unesene_reci.index('and')
+        unesene_reci.remove('and')
+        """
+        Preko indeksa znam koja 2 elementa iz liste, trebaju obavezno da budu prilikom pretrage.
+        t1,t2 - Tuple u kome cuvamo [uspesnost_trazenja, broj_pojavljivanja]
+        """
+        #print(unesene_reci)
 
-    # # instanca stabla
-    # t = Tree()
-    # t.root = TreeNode(0)
+        t1=find_prefix(stablo.root, unesene_reci[index-1])
+        t2=find_prefix(stablo.root, unesene_reci[index])
+        #print("Imamo " + str(t1[1]) + " pojavljivanja reci " + unesene_reci[index-1] + " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
+        #print("Imamo " + str(t2[1]) + " pojavljivanja reci " + unesene_reci[index]+ " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
+        if(t1[0] == True and t2[0] == True):
+            #print("Obe reci su se pojavile!!!!")
+            setPodatka = Set('')
+            resultSet =proveriReciAND(setPodatka,unos,unesene_reci[index-1],unesene_reci[index])
+            print("-------------------- REZULTAT PRETRAGE ----------------------")
+            for elem in iter(resultSet):
+                print("\t\t\t\t\t  "+elem)
+            print("-------------------------------------------------------------")
+        else:
+            print("Error: Nisu se obe reci pojavile!!")
 
-    # # kreiranje relacija između novih čvorova
-    # a = TreeNode(1)
-    # b = TreeNode(2)
-    # c = TreeNode(3)
+    elif 'not' in unesene_reci:
+        print("IMAMO NOT OPERATOR")
+        unesene_reci.remove('not')
+        # TODO: implementirati pretragu koja zahteva da prva ( leva rec u listi) bude u fajlu a druga ( desna u listi) ne
+    elif 'or' in unesene_reci:
+        index = unesene_reci.index('or')
+        unesene_reci.remove('or')
+
+        t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+        t2 = find_prefix(stablo.root, unesene_reci[index])
+
+        if (t1[0] == True or t2[0] == True):
+            setPodatka = Set('')
+            resultSet = Set('')
+            if(t1[0] == True and t2[0] == True):
+                print("slucaj1")
+                resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
+            elif(t1[0] == True and t2[0] == False):
+                print("slucaj2")
+                resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
+            elif(t1[0] == False and t2[0] == True):
+                print("slucaj3")
+                resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
+
+            print("-------------------- REZULTAT PRETRAGE ----------------------")
+            for elem in iter(resultSet):
+                print("\t\t\t\t\t  " + elem)
+            print("-------------------------------------------------------------")
+        else:
+            print("Error: Obe reci se uopste nisu pojavile!!")
+
+    else:
+        print("NEMAMO NI JEDAN OPERATOR")
+        # TODO: implementirati da radi kao or samo da moze vise reci
+
