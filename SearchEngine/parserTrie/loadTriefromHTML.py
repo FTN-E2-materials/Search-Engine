@@ -3,6 +3,8 @@ import time
 
 from parserTrie.Tree import *
 from parserTrie.Parser import Parser
+from parserTrie.Tree import TreeNode
+
 
 
 def loadTrieViaHTML(path):

@@ -106,4 +106,28 @@ class Graph:
         self._incoming[v][u] = e
 
 
+def add_elements_to_Graph(E, directed=True):
+    """Kreira graf od ivica.
 
+  Dozvoljeno je dva načina navođenje ivica:
+        (origin,destination)
+        (origin,destination,element).
+  Podrazumeva se da se labele čvorova mogu hešovati.
+  """
+    g = Graph(directed)
+    V = set()
+    for e in E:
+        V.add(e[0])
+        V.add(e[1])
+
+    vertices = {}  # izbegavamo ponavljanje labela između čvorova
+    for v in V:
+        vertices[v] = g.insert_vertex(v)
+
+    for e in E:
+        src = e[0]
+        dest = e[1]
+        element = e[2] if len(e) > 2 else None
+        g.insert_edge(vertices[src], vertices[dest], element)
+
+    return g
