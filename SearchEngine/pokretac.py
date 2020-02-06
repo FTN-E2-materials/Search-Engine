@@ -110,7 +110,22 @@ if __name__ == '__main__':
             print("Error: Obe reci se uopste nisu pojavile!!")
 
     else:
-        print("NEMAMO NI JEDAN OPERATOR")
+        #print("NEMAMO NI JEDAN OPERATOR")
+        resultSet = Set('')
+        pojavljivane_reci = []
+        for i in range(len(unesene_reci)):
+            t = find_prefix(stablo.root, unesene_reci[i])
+            if(t[0] == True):
+                pojavljivane_reci.append(unesene_reci[i])
+                resultSet = proveriRecOR(resultSet, unos, unesene_reci[i])
+
+        print("-------------------- REZULTAT PRETRAGE ----------------------")
+        for elem in iter(resultSet):
+            print("\t\t\t\t\t  " + elem)
+        print("-------------------------------------------------------------")
+        print("Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
+        print("-------------------------------------------------------------")
+
         # TODO: implementirati da radi kao or samo da moze vise reci
 
 

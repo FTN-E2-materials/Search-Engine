@@ -22,7 +22,8 @@ def proveriReciAND(setPod,path,rec1: str,rec2: str):
                     if rec2.lower() == word.lower():
                         flag2=1
                 if flag1 == 1 and flag2 == 1:
-                    resultSet.elements.append(filename)
+                    if filename not in resultSet.elements:
+                        resultSet.elements.append(filename)
     return resultSet
 
 
@@ -38,6 +39,7 @@ def proveriRecOR(setPod,path,rec1: str):
                 for word in parser.words:
                     if rec1.lower() == word.lower():
                         #print("Reci se nalaze u fajlu " + filename)
-                        resultSet.elements.append(filename)
-                        break
+                        if filename not in resultSet.elements:
+                            resultSet.elements.append(filename)
+                            break
     return resultSet
