@@ -14,6 +14,7 @@ def proveriReciAND(setPod,path,rec1: str,rec2: str):
             if r".html" in filename:
                 # "Ova linija uzima filename, i spaja ga sa root directorijem, tako da dobijemo Absolute Path"
                 parser.parse(os.path.join(root, filename))
+                absPath = os.path.join(root, filename)
                 flag1 = -1
                 flag2 = -1
                 for word in parser.words:
@@ -23,7 +24,7 @@ def proveriReciAND(setPod,path,rec1: str,rec2: str):
                         flag2=1
                 if flag1 == 1 and flag2 == 1:
                     if filename not in resultSet.elements:
-                        resultSet.elements.append(filename)
+                        resultSet.elements.append(absPath)
     return resultSet
 
 # Metoda koja saopstava u kom se sve fajlu nalazi rec1 a da se ne nalazi rec2
@@ -35,6 +36,7 @@ def proveriReciNOT(setPod,path,rec1: str,rec2: str):
             if r".html" in filename:
                 # "Ova linija uzima filename, i spaja ga sa root directorijem, tako da dobijemo Absolute Path"
                 parser.parse(os.path.join(root, filename))
+                absPath = os.path.join(root, filename)
                 flag1 = -1
                 flag2 = 1
                 for word in parser.words:
@@ -45,7 +47,7 @@ def proveriReciNOT(setPod,path,rec1: str,rec2: str):
 
                 if flag1 == 1 and flag2 == 1:
                     if filename not in resultSet.elements:
-                        resultSet.elements.append(filename)
+                        resultSet.elements.append(absPath)
 
     return resultSet
 
@@ -58,10 +60,11 @@ def proveriRecOR(setPod,path,rec1: str):
             if r".html" in filename:
                 # "Ova linija uzima filename, i spaja ga sa root directorijem, tako da dobijemo Absolute Path"
                 parser.parse(os.path.join(root, filename))
+                absPath = os.path.join(root, filename)
                 for word in parser.words:
                     if rec1.lower() == word.lower():
                         #print("Reci se nalaze u fajlu " + filename)
                         if filename not in resultSet.elements:
-                            resultSet.elements.append(filename)
+                            resultSet.elements.append(absPath)
                             break
     return resultSet
