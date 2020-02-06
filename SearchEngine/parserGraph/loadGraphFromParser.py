@@ -1,7 +1,7 @@
 import os
 import time
-from parserGraph.Graph import *
-from parserGraph.Parser import Parser
+from SearchEngine.parserGraph.Graph import *
+from SearchEngine.parserGraph.Parser import Parser
 
 def loadGraphFromParser(path):
     directed = True
@@ -20,7 +20,7 @@ def loadGraphFromParser(path):
     """
 
     E = []
-
+    link = ''
     for root, dirs, files in os.walk(path, topdown = False):
         for filename in files:
             if r".html" in filename:
@@ -29,10 +29,18 @@ def loadGraphFromParser(path):
                 parser.parse(os.path.join(root, filename))
                 print(filename + " " + str(parser.links.__len__()))
                 for links in parser.links:
-                    E.append([absPath,links])
+                    for c in range(len(links)-1,0,-1):
+                        if links[c] == "\\":
+                            link = links
+                            E.append([absPath, link, links])
+                            break
+
+
                     #add_element_to_Graph(g,absPath,links)
                     #print(links)
-                g = add_elements_to_Graph(E, directed)
+
+
+    g = add_elements_to_Graph(E, directed)
     end = time.time()
     print("Parsed files and loaded the Graph structure in " + str((end - start).__round__(2  )) + " seconds.")
 

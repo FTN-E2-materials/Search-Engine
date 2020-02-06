@@ -28,9 +28,9 @@ if __name__ == '__main__':
                 stablo = loadTrieViaHTML(unos)
 
                 g = loadGraphFromParser(unos)
-                #Testiranje grafa , ispisivanje svih cvorova
-                for v in g.vertices():
-                    print(v)
+                # #Testiranje grafa , ispisivanje svih cvorova
+                # for v in g.vertices():
+                #    print(v)
                 # Testiranje grafa , ispisivanje svih listova
                 for e in g.edges():
                     print(e)
