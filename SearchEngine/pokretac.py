@@ -13,7 +13,7 @@ from parserGraph.loadGraphFromParser import loadGraphFromParser
 if __name__ == '__main__':
     stablo = Tree()
     unos = ''
-    #petlja ce da se izvrsava sve dok korisnik ne unese nesto
+    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unos == '':
         regexPattern1 = fnmatch.translate('[A-Z]:\*')
         regexPattern2 = fnmatch.translate('/*')
@@ -22,23 +22,23 @@ if __name__ == '__main__':
         regexObj2 = re.compile(regexPattern2)
         print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
         unos = input()
-        if unos!='': #Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
+        if unos != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj1.match(unos) or regexObj2.match(unos):
                 print("Validna putanja!")
                 stablo = loadTrieViaHTML(unos)
 
                 g = loadGraphFromParser(unos)
-                #Testiranje grafa , ispisivanje svih cvorova
+                # Testiranje grafa , ispisivanje svih cvorova
                 for v in g.vertices():
                     print(v)
                 # Testiranje grafa , ispisivanje svih listova
                 for e in g.edges():
                     print(e)
             else:
-               print("Putanja nije validna!")
-               unos = ''
+                print("Putanja nije validna!")
+                unos = ''
 
-    unosUpit=''
+    unosUpit = ''
     # petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unosUpit == '':
         # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
@@ -53,9 +53,9 @@ if __name__ == '__main__':
                 print("Niste uneli validnu pretragu!")
                 unosUpit = ''
 
-    #print(unosUpit)
-    unesene_reci = unosUpit.split( )
-    #print(unesene_reci)
+    # print(unosUpit)
+    unesene_reci = unosUpit.split()
+    # print(unesene_reci)
     if 'and' in unesene_reci:
         # print("IMAMO AND OPERATOR")
         index = unesene_reci.index('and')
@@ -66,24 +66,35 @@ if __name__ == '__main__':
         """
         print(unesene_reci)
 
-        t1=find_prefix(stablo.root, unesene_reci[index-1])
-        t2=find_prefix(stablo.root, unesene_reci[index])
-        #print("Imamo " + str(t1[1]) + " pojavljivanja reci " + unesene_reci[index-1] + " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
-        #print("Imamo " + str(t2[1]) + " pojavljivanja reci " + unesene_reci[index]+ " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
-        if(t1[0] == True and t2[0] == True):
+        t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+        t2 = find_prefix(stablo.root, unesene_reci[index])
+        # print("Imamo " + str(t1[1]) + " pojavljivanja reci " + unesene_reci[index-1] + " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
+        # print("Imamo " + str(t2[1]) + " pojavljivanja reci " + unesene_reci[index]+ " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
+        if (t1[0] == True and t2[0] == True):
             print("Obe reci su se pojavile!!!!")
             setPodatka = Set('')
-            resultSet =proveriReciAND(setPodatka,unos,unesene_reci[index-1],unesene_reci[index])
+            resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
             print("-------------------- REZULTAT PRETRAGE ----------------------")
             for elem in iter(resultSet):
-                print("\t\t\t\t\t  "+elem)
+                print("\t\t\t\t\t  " + elem)
             print("-------------------------------------------------------------")
         else:
             print("Error: Nisu se obe reci pojavile!!")
 
     elif 'not' in unesene_reci:
         print("IMAMO NOT OPERATOR")
+        index = unesene_reci.index('not')
         unesene_reci.remove('not')
+
+        resultSet = Set('')
+        resultSet = proveriReciNOT(resultSet, unos, unesene_reci[index - 1], unesene_reci[index])
+        print("-------------------- REZULTAT PRETRAGE ----------------------")
+        for elem in iter(resultSet):
+            print("\t\t\t\t\t  " + elem)
+        print("-------------------------------------------------------------")
+        print("Pojavljuje se na " + str(len(resultSet)) +" stranica")
+        print("-------------------------------------------------------------")
+
         # TODO: implementirati pretragu koja zahteva da prva ( leva rec u listi) bude u fajlu a druga ( desna u listi) ne
     elif 'or' in unesene_reci:
         index = unesene_reci.index('or')
@@ -95,27 +106,29 @@ if __name__ == '__main__':
         if (t1[0] == True or t2[0] == True):
             setPodatka = Set('')
             resultSet = Set('')
-            if(t1[0] == True and t2[0] == True):
+            if (t1[0] == True and t2[0] == True):
                 resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
-            elif(t1[0] == True and t2[0] == False):
+            elif (t1[0] == True and t2[0] == False):
                 resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
-            elif(t1[0] == False and t2[0] == True):
+            elif (t1[0] == False and t2[0] == True):
                 resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
 
             print("-------------------- REZULTAT PRETRAGE ----------------------")
             for elem in iter(resultSet):
                 print("\t\t\t\t\t  " + elem)
             print("-------------------------------------------------------------")
+            print("Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
+            print("-------------------------------------------------------------")
         else:
             print("Error: Obe reci se uopste nisu pojavile!!")
 
     else:
-        #print("NEMAMO NI JEDAN OPERATOR")
+        # print("NEMAMO NI JEDAN OPERATOR")
         resultSet = Set('')
         pojavljivane_reci = []
         for i in range(len(unesene_reci)):
             t = find_prefix(stablo.root, unesene_reci[i])
-            if(t[0] == True):
+            if (t[0] == True):
                 pojavljivane_reci.append(unesene_reci[i])
                 resultSet = proveriRecOR(resultSet, unos, unesene_reci[i])
 
@@ -125,7 +138,5 @@ if __name__ == '__main__':
         print("-------------------------------------------------------------")
         print("Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
         print("-------------------------------------------------------------")
-
-        # TODO: implementirati da radi kao or samo da moze vise reci
-
-
+        print("Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
+        print("-------------------------------------------------------------")
