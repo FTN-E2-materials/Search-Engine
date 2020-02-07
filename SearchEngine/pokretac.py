@@ -13,6 +13,7 @@ from SearchEngine.parserGraph.loadGraphFromParser import loadGraphFromParser
 
 
 if __name__ == '__main__':
+    globalResultSet = Set('')
     stablo = Tree()
     unos = ''
     # petlja ce da se izvrsava sve dok korisnik ne unese nesto
@@ -30,14 +31,15 @@ if __name__ == '__main__':
                 stablo = loadTrieViaHTML(unos)
 
                 g = loadGraphFromParser(unos)
+                V = g.vertices()
+                # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
+                for v in V:
+                    print("--------------- DOKUMENT: ", v , " ---------------" )
 
-                # Testiranje grafa , ispisivanje svih cvorova
-                for v in g.vertices():
-                    print(v)
-
-                # Testiranje grafa , ispisivanje svih listova
-                for e in g.edges():
-                    print(e)
+                    print("DOKUMENTI KOJI IMAJU LINKA KA TOM DOKUMENTU: ")
+                    for e in g.edges():
+                        if str(v) == str(e._destination):
+                            print(str(e._origin))
             else:
                 print("Putanja nije validna!")
                 unos = ''
@@ -78,6 +80,7 @@ if __name__ == '__main__':
             print("Obe reci su se pojavile!!!!")
             setPodatka = Set('')
             resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
+            globalResultSet=resultSet
             print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
             for elem in iter(resultSet):
                 print("\t\t\t\t\t  " + elem)
@@ -94,6 +97,7 @@ if __name__ == '__main__':
 
         resultSet = Set('')
         resultSet = proveriReciNOT(resultSet, unos, unesene_reci[index - 1], unesene_reci[index])
+        globalResultSet = resultSet
         print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
         for elem in iter(resultSet):
             print("\t\t\t\t\t  " + elem)
@@ -125,6 +129,7 @@ if __name__ == '__main__':
             print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
             print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
             print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            globalResultSet = resultSet
         else:
             print("Error: Obe reci se uopste nisu pojavile!!")
 
@@ -138,6 +143,7 @@ if __name__ == '__main__':
                 pojavljivane_reci.append(unesene_reci[i])
                 resultSet = proveriRecOR(resultSet, unos, unesene_reci[i])
 
+
         print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
         for elem in iter(resultSet):
             print("\t\t\t\t\t  " + elem)
@@ -147,4 +153,42 @@ if __name__ == '__main__':
         print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
         print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        globalResultSet = resultSet
+
+
+    def takeSecond(elem):
+        return elem[1]
+
+    #RANGIRANJE PRETRAGE
+    #print(globalResultSet)
+    rankedStructure = [] #[ [elementizPretrage1, backlinks], [elementizPretrage2, backlinks]....]
+    for element in iter(globalResultSet):
+        #za svaki element iz pretrage treba naci koliko cvorova pokazuje na njega u grafu
+        backlinks = 0 #za svaki element iz pretrage restartujemo broj backlinkova
+        #print("ELEMENT:", element)
+        for e in g.edges():
+            #print("GRANA:", e._destination)
+            if str(e._destination) == element:
+                backlinks = backlinks + 1
+        rank = [element, backlinks]
+        rankedStructure.append(rank)
+    rankedStructure.sort(reverse=True,key=takeSecond)
+    print(rankedStructure)
+
+    print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
+    for elem in iter(rankedStructure):
+        print("\t\t\t\t\t  " , elem[0])
+
+    print(
+        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+    print("\t\t\t\t\t Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
+    print(
+        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+    print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
+    print(
+        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+    globalResultSet = resultSet
+
+
+
 
