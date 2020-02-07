@@ -1,7 +1,7 @@
 import os
 import time
-from SearchEngine.parserGraph.Graph import *
-from SearchEngine.parserGraph.Parser import Parser
+from parserGraph.Graph import *
+from parserGraph.Parser import Parser
 
 def loadGraphFromParser(path):
     directed = True

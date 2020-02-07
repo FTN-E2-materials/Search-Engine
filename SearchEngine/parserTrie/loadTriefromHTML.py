@@ -27,6 +27,7 @@ def loadTrieViaHTML(path):
                 parser.parse(os.path.join(root, filename))
                 print(filename + " " + str(parser.words.__len__()))
                 for word in parser.words:
+                    #if word.lower() == ""
                     add(trie.root, word.lower())
 
     end = time.time()
