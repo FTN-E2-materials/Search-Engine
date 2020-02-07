@@ -2,7 +2,7 @@
 Modul koji predstavlja pokretacki deo aplikacije.
 
 """
-
+from SearchEngine.pagination import paginacija
 from SearchEngine.parserTrie.proveriRec import *
 from SearchEngine.set import *
 from SearchEngine.parserTrie.loadTriefromHTML import loadTrieViaHTML
@@ -63,7 +63,6 @@ if __name__ == '__main__':
     unesene_reci = unosUpit.split()
     # print(unesene_reci)
     if 'and' in unesene_reci:
-        # print("IMAMO AND OPERATOR")
         index = unesene_reci.index('and')
         unesene_reci.remove('and')
         """
@@ -80,32 +79,21 @@ if __name__ == '__main__':
             print("Obe reci su se pojavile!!!!")
             setPodatka = Set('')
             resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
-            globalResultSet=resultSet
-            print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
-            for elem in iter(resultSet):
-                print("\t\t\t\t\t  " + elem)
-            print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            print("\t\t\t\t\t Pojavljuje se na " + str(len(resultSet)) + " stranica")
-            print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            globalResultSet = resultSet
+            paginacija(resultSet)
+
         else:
             print("Error: Nisu se obe reci pojavile!!")
 
     elif 'not' in unesene_reci:
-        print("IMAMO NOT OPERATOR")
         index = unesene_reci.index('not')
         unesene_reci.remove('not')
 
         resultSet = Set('')
         resultSet = proveriReciNOT(resultSet, unos, unesene_reci[index - 1], unesene_reci[index])
         globalResultSet = resultSet
-        print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
-        for elem in iter(resultSet):
-            print("\t\t\t\t\t  " + elem)
-        print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-        print("\t\t\t\t\t Pojavljuje se na " + str(len(resultSet)) +" stranica")
-        print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        paginacija(resultSet)
 
-        # TODO: implementirati pretragu koja zahteva da prva ( leva rec u listi) bude u fajlu a druga ( desna u listi) ne
     elif 'or' in unesene_reci:
         index = unesene_reci.index('or')
         unesene_reci.remove('or')
@@ -123,18 +111,12 @@ if __name__ == '__main__':
             elif (t1[0] == False and t2[0] == True):
                 resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
 
-            print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
-            for elem in iter(resultSet):
-                print("\t\t\t\t\t  " + elem)
-            print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-            print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
-            print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+            paginacija(resultSet)
             globalResultSet = resultSet
         else:
             print("Error: Obe reci se uopste nisu pojavile!!")
 
     else:
-        # print("NEMAMO NI JEDAN OPERATOR")
         resultSet = Set('')
         pojavljivane_reci = []
         for i in range(len(unesene_reci)):
@@ -143,15 +125,8 @@ if __name__ == '__main__':
                 pojavljivane_reci.append(unesene_reci[i])
                 resultSet = proveriRecOR(resultSet, unos, unesene_reci[i])
 
-
-        print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT PRETRAGE -----------------------------------------------------------------------------------")
-        for elem in iter(resultSet):
-            print("\t\t\t\t\t  " + elem)
-
-        print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
+        paginacija(resultSet)
         print("\t\t\t\t\t Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
-        print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-        print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
         print("\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         globalResultSet = resultSet
 
@@ -179,14 +154,6 @@ if __name__ == '__main__':
     for elem in iter(rankedStructure):
         print("\t\t\t\t\t  " , elem[0])
 
-    print(
-        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-    print("\t\t\t\t\t Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
-    print(
-        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
-    print("\t\t\t\t\t Pojavljuje/u se na " + str(len(resultSet)) + " stranica")
-    print(
-        "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
     globalResultSet = resultSet
 
 
