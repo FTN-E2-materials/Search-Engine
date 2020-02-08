@@ -1,13 +1,12 @@
+
 """
 Modul koji implementira strukturu podataka Set.
 """
-
 
 class Set:
     def __init__(self, iterable):
         self.elements = lst = []
         self.brPojavljivanjaReci = []          # lista/niz zabroj pojavljivanja pretrazivane reci
-        # TODO: dodati da se brojPojavljivanja prenosi i kod operacija unije,preseka komplementa !!!
         for value in iterable:
             if value not in lst:
                 lst.append(value)
@@ -24,75 +23,105 @@ class Set:
     # Magicna metoda koja vrsi uniju tj. a|b
     def __or__(self, other):
         newSet = Set("")
-        lst = []
-        for value in other:
-            if value not in lst:
-                lst.append(value)
+        lst = []        # lista za elemente tj linkove
+        #lstR= []        # lsita za broj ponavljanja reci
 
-        for value in self:
-            if value not in lst:
-                lst.append(value)
+        i = 0
+        for element in other.elements:
+            if element not in lst:
+                lst.append(element)
+                #brojReci = other.brPojavljivanjaReci[i]
+                #lstR.append(brojReci)
+            i += 1
+        i = 0
+        for element in self.elements:
+            if element not in lst:
+                lst.append(element)
+                #brojReci = self.brPojavljivanjaReci[i]
+                #lstR.append(brojReci)
+            i += 1
+
         newSet.elements = lst
+        #newSet.brPojavljivanjaReci = lstR
         return newSet
 
     # Metoda koja vrsi uniju skupova.
     def union(self, other):
         newSet = Set("")
-        lst = []
-        for value in other:
-            if value not in lst:
-                lst.append(value)
+        lst = []  # lista za elemente tj linkove
+        #lstR = []  # lsita za broj ponavljanja reci
 
-        for value in self:
-            if value not in lst:
-                lst.append(value)
+        i = 0
+        for element in other.elements:
+            if element not in lst:
+                lst.append(element)
+                #brojReci = other.brPojavljivanjaReci[i]
+                #lstR.append(brojReci)
+            i += 1
+        i = 0
+        for element in self.elements:
+            if element not in lst:
+                lst.append(element)
+                #brojReci = self.brPojavljivanjaReci[i]
+                #lstR.append(brojReci)
+            i += 1
+
         newSet.elements = lst
+        #newSet.brPojavljivanjaReci = lstR
         return newSet
 
     # Magicna metoda koja vrsi presek tj. a&b
     def __and__(self, other):
-        # print("and")
         newSet = Set("")
         elements = []
+        #reci=[]
         for i in range(len(self)):
             for j in range(len(other)):
                 if self.elements[i] == other.elements[j]:
                     elements.append(self.elements[i])
+                    #reci.append(self.brPojavljivanjaReci[i])
         newSet.elements = elements
+        #newSet.brPojavljivanjaReci = reci
         return newSet
 
     # Metoda koja vrsi presek skupova.
     def intersection(self, other):
-        # print("presek")
         newSet = Set("")
         elements = []
+        #reci = []
         for i in range(len(self)):
             for j in range(len(other)):
                 if self.elements[i] == other.elements[j]:
                     elements.append(self.elements[i])
+                    #reci.append(self.brPojavljivanjaReci[i])
         newSet.elements = elements
+        #newSet.brPojavljivanjaReci = reci
         return newSet
 
     # Magicna metoda koja vrsi komplement skupa tj. a-b
     def __sub__(self, other):
-        # print("sub")
         newSet = Set("")
 
         newSet.elements.extend(self.elements)
-        for element in other:
-            if element in self:
+        #newSet.brPojavljivanjaReci.extend(self.brPojavljivanjaReci)
+        for element in other.elements:
+            if element in self.elements:
                 newSet.elements.remove(element)
+                #idx = self.elements.index(element)
+                #newSet.brPojavljivanjaReci.pop(idx)
         return newSet
 
     # Metoda koja vrsi komplement skupa.
     def complement(self, other):
-        # print("komplement")
         newSet = Set("")
 
         newSet.elements.extend(self.elements)
-        for element in other:
-            if element in self:
+        #newSet.brPojavljivanjaReci.extend(self.brPojavljivanjaReci)
+        for element in other.elements:
+            if element in self.elements:
                 newSet.elements.remove(element)
+                #idx = self.elements.index(element)
+                #newSet.brPojavljivanjaReci.pop(idx)
         return newSet
 
     # Overide metoda za ispis seta.

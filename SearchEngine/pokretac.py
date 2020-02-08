@@ -1,10 +1,10 @@
 """
 Modul koji predstavlja pokretacki deo aplikacije.
-
 """
-
+import fnmatch, re
 from unos import *
 from parserGraph.loadGraphFromParser import loadGraphFromParser
+from parserTrie.loadTriefromHTML import loadTrieViaHTML
 
 if __name__ == '__main__':
 
@@ -89,7 +89,3 @@ if __name__ == '__main__':
         print("\t\t\t\t\t  " , elem[0])
 
     #globalResultSet = resultSet
-
-
-
-

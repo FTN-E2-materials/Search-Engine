@@ -1,12 +1,9 @@
 
 from pagination import paginacija
-from parserTrie.proveriRec import *
+from parserTrie.findset import *
+
 from set import *
-from parserTrie.loadTriefromHTML import loadTrieViaHTML
 from parserTrie.Tree import *
-import fnmatch, re
-from parserTrie.Parser import *
-from parserGraph.loadGraphFromParser import loadGraphFromParser
 
 
 # function to get unique values
@@ -34,9 +31,10 @@ def pretraga(unesene_reci,stablo,unos):
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
             if (t1[0] == True and t2[0] == True):
-                print("Obe reci su se pojavile!!!!")
-                setPodatka = Set('')
-                resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
+                set1 = nadjiSet(unos, unesene_reci[index - 1])
+                set2 = nadjiSet(unos, unesene_reci[index])
+                resultSet = set1.intersection(set2)
+
                 globalResultSet = resultSet
                 paginacija(resultSet)
 
@@ -49,8 +47,9 @@ def pretraga(unesene_reci,stablo,unos):
             index = unesene_reci.index('not')
             unesene_reci.remove('not')
 
-            resultSet = Set('')
-            resultSet = proveriReciNOT(resultSet, unos, unesene_reci[index - 1], unesene_reci[index])
+            set1 = nadjiSet(unos, unesene_reci[index - 1])
+            set2 = nadjiSet(unos, unesene_reci[index])
+            resultSet = set1.complement(set2)
             globalResultSet = resultSet
             paginacija(resultSet)
         else:
@@ -62,33 +61,17 @@ def pretraga(unesene_reci,stablo,unos):
 
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
-            if unesene_reci[0] == unesene_reci[1]:
-                if (t1[0] == True ):
-                    setPodatka = Set('')
-                    resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
+            if (t1[0] == True or t2[0] == True):
+                set1 = nadjiSet(unos,unesene_reci[index-1])
+                set2 = nadjiSet(unos,unesene_reci[index])
+                resultSet = set1.union(set2)
+
                 paginacija(resultSet)
                 globalResultSet = resultSet
             else:
-
-                if (t1[0] == True or t2[0] == True):
-                    setPodatka = Set('')
-                    resultSet = Set('')
-                    if (t1[0] == True and t2[0] == True):
-                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
-                        resultSet = proveriRecOR(resultSet, unos, unesene_reci[index])
-                        # resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
-                    elif (t1[0] == True and t2[0] == False):
-                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
-                    elif (t1[0] == False and t2[0] == True):
-                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
-
-                    paginacija(resultSet)
-                    globalResultSet = resultSet
-
-                else:
-                    print("Error: Obe reci se uopste nisu pojavile!!")
+                print("Error: Obe reci se uopste nisu pojavile!!")
         else:
-            print("Error: Nije unesena validna pretraga sa and operatorom")
+            print("Error: Nije unesena validna pretraga sa or operatorom")
 
     else:
         resultSet = Set('')
@@ -98,10 +81,11 @@ def pretraga(unesene_reci,stablo,unos):
             t = find_prefix(stablo.root, unesene_reci[i])
             if (t[0] == True):
                 pojavljivane_reci.append(unesene_reci[i])
-                resultSet = proveriRecOR(resultSet, unos, unesene_reci[i])
+                set = nadjiSet(unos,unesene_reci[i])
+                resultSet = resultSet.union(set)
 
         paginacija(resultSet)
-        print("\t\t\t\t\t Reci koje su se zapravo pojavile su: " + str(pojavljivane_reci))
+        print("\t\t\t\t\t Od unesenih reci, one koje su se zapravo pojavile su: " + str(pojavljivane_reci))
         print(
             "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         globalResultSet = resultSet
