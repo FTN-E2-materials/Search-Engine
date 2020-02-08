@@ -61,14 +61,19 @@ if __name__ == '__main__':
     #             a.append(str(e._origin))
     #     dokumentiKojiImajuLinkKaDokumentu.append([str(v), a])
     dokumentiKojiImajuLinkKaDokumentu = {}
+    bekLinkovi = {}
     for v in V:
+        backlinks = 0
         a = []
         for e in g.edges():
             if str(v) == str(e._destination):
                 a.append(str(e._origin))
-        dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
+                backlinks = backlinks + 1
 
-    print(dokumentiKojiImajuLinkKaDokumentu)
+        dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
+        bekLinkovi[str(v)] = backlinks
+
+    print(bekLinkovi)
 
     start3 = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
@@ -78,7 +83,7 @@ if __name__ == '__main__':
     print("Pretraga prosla")
     #Rangiranje i stampanje pretrage
     start2 = time.time()
-    rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
+    rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
     end2 = time.time()
     print("RANGIRANJE: " + str((end2 - start2).__round__(2)) + " seconds.")
     #print(dokumentiKojiImajuLinkKaDokumentu)

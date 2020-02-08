@@ -15,27 +15,21 @@ def brojPonavaljanjaReciuDatoteci(datoteka, rec: str):
 
 
 # RANGIRANJE PRETRAGE
-def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g):
+def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci):
     rankedStructure = [] #[ [elementizPretrage1, poeni1], [elementizPretrage2, poeni2]....]
     for element in iter(globalResultSet):
-        # za svaki element iz pretrage treba naci koliko cvorova pokazuje na njega u grafu
-
-        backlinks = 0 #za svaki element iz pretrage restartujemo broj backlinkova
-        for e in g.edges():
-            if str(e._destination) == element:
-                backlinks = backlinks + 1
-
 
         brojponavljanjaReciuDatotekamaKojeLinkuju = 0
         for z in dokumentiKojiImajuLinkKaDokumentu[element]:
             for ureci in unesene_reci:
-                 brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, ureci)
+                if ureci.lower() not in ['and', 'or', 'not']:
+                    brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, ureci)
 
         for urecii in unesene_reci:
             brojponavljanjaReci = brojPonavaljanjaReciuDatoteci(element, urecii)
 
 
-        rank = [element, backlinks + (brojponavljanjaReci*0.7) + (brojponavljanjaReciuDatotekamaKojeLinkuju*0.4)]
+        rank = [element, bekLinkovi[element] + (brojponavljanjaReci*0.7) + (brojponavljanjaReciuDatotekamaKojeLinkuju*0.4)]
         rankedStructure.append(rank)
 
     #Samostalna implementacija algoritma za sortiranje u metodi quickSort)
