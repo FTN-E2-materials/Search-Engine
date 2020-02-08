@@ -72,8 +72,17 @@ if __name__ == '__main__':
                 backlinks = backlinks + 1
         rank = [element, backlinks]
         rankedStructure.append(rank)
-    rankedStructure.sort(reverse=True,key=takeSecond)
-    print(rankedStructure)
+
+    #Kod koji radi ugradjeno sortiranje
+    #rankedStructure.sort(reverse=True,key=takeSecond)
+    #print(rankedStructure)
+    #Samostalna implementacija algoritma za sortiranje
+    sortedRankedStructure = []
+    print("SSSSSSSSSSSSSss")
+    for c in rankedStructure:
+        print(c)
+
+
 
     print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
     for elem in iter(rankedStructure):
