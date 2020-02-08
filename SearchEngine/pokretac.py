@@ -1,7 +1,7 @@
 """
 Modul koji predstavlja pokretacki deo aplikacije.
 """
-
+from ucitavanePodata import popunjavanjeStruktura
 from unos import *
 from rangiranjePretrage import rangiranjePretrage
 import fnmatch, re
@@ -28,9 +28,9 @@ if __name__ == '__main__':
         if unos != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj1.match(unos) or regexObj2.match(unos):
                 print("Validna putanja!")
-                stablo = loadTrieViaHTML(unos)
-
-                g = loadGraphFromParser(unos)
+                #stablo = loadTrieViaHTML(unos)
+                stablo,g = popunjavanjeStruktura(unos)
+                #g = loadGraphFromParser(unos)
                 V = g.vertices()
                 # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
                 dokumentiKojiImajuLinkKaDokumentu = [] # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
