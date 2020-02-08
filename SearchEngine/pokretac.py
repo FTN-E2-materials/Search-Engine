@@ -73,7 +73,7 @@ if __name__ == '__main__':
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
     #Rangiranje i stampanje pretrage
-    rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
+    rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
 
 
     paginacija(rangiranSet)

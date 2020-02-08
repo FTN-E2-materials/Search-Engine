@@ -32,17 +32,16 @@ def brojPonavaljanjaReciuDatoteci(globalResultSet, unesene_reci):
 
 
 # RANGIRANJE PRETRAGE
-def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci):
+def rangiranjePretrage(setSvihDatoteka,globalResultSet,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci):
     rankedStructure = [] #[ [elementizPretrage1, poeni1], [elementizPretrage2, poeni2]....]
-    brojPonavljanjaUnetihReciDict = brojPonavaljanjaReciuDatoteci(globalResultSet, unesene_reci)
-    for element in iter(globalResultSet):
+    brojPonavljanjaUnetihReciDict = brojPonavaljanjaReciuDatoteci(setSvihDatoteka, unesene_reci)
 
+    for element in iter(globalResultSet):
         brojponavljanjaReciuDatotekamaKojeLinkuju = 0
         for z in dokumentiKojiImajuLinkKaDokumentu[element]:
             brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavljanjaUnetihReciDict[z]
 
         brojponavljanjaReci = brojPonavljanjaUnetihReciDict[element]
-
         rank = [element, bekLinkovi[element] + (brojponavljanjaReci*0.7) + (brojponavljanjaReciuDatotekamaKojeLinkuju*0.4)]
         rankedStructure.append(rank)
 
