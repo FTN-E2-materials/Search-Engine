@@ -36,7 +36,7 @@ def pretraga(unesene_reci,stablo,unos):
                 resultSet = set1.intersection(set2)
 
                 globalResultSet = resultSet
-                paginacija(resultSet)
+                #paginacija(resultSet)
             else:
                 print("Error: Nisu se obe reci pojavile!!")
         else:

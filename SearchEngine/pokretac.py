@@ -42,7 +42,7 @@ if __name__ == '__main__':
     # petlja ce da se izvrsava sve dok korisnik ne unese nesto
     while unosUpit == '':
         # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
-        regexObj111 = re.compile("(([\w]+\s){1}(and|or|not)(\s[\w]+){1})|([\w\s]+)")
+        regexObj111 = re.compile("(([\w]+\s){1}(and|or|not){1}(\s[\w]+){1})|([\w\s]+)")
 
         print("Unesite pretragu:")
         unosUpit = input()
@@ -71,11 +71,13 @@ if __name__ == '__main__':
 
 
     globalResultSet = pretraga(unesene_reci,stablo,unos)
-
+    if len(globalResultSet.elements) != 0:
     #Rangiranje i stampanje pretrage
-    rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
+        rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
+        paginacija(rangiranSet)
+    else:
+        print("Not successful search!")
 
 
-    paginacija(rangiranSet)
 
 
