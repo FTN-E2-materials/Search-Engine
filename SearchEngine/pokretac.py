@@ -5,6 +5,8 @@ import fnmatch, re
 from unos import *
 from parserGraph.loadGraphFromParser import loadGraphFromParser
 from parserTrie.loadTriefromHTML import loadTrieViaHTML
+from quickSortMultiList import quickSort
+
 
 if __name__ == '__main__':
 
@@ -59,9 +61,12 @@ if __name__ == '__main__':
 
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
+
+
     def takeSecond(elem):
         return elem[1]
 
+    brojac = 0
     # RANGIRANJE PRETRAGE
     rankedStructure = [] #[ [elementizPretrage1, backlinks], [elementizPretrage2, backlinks]....]
     for element in iter(globalResultSet):
@@ -70,18 +75,23 @@ if __name__ == '__main__':
         for e in g.edges():
             if str(e._destination) == element:
                 backlinks = backlinks + 1
-        rank = [element, backlinks]
+
+
+        rank = [element, backlinks + (globalResultSet.brPojavljivanjaReci[brojac]*0.7)]
+        brojac = brojac + 1
         rankedStructure.append(rank)
+
+    for bpr in globalResultSet.brPojavljivanjaReci:
+        print(bpr)
 
     #Kod koji radi ugradjeno sortiranje
     #rankedStructure.sort(reverse=True,key=takeSecond)
     #print(rankedStructure)
     #Samostalna implementacija algoritma za sortiranje
-    sortedRankedStructure = []
-    print("SSSSSSSSSSSSSss")
-    for c in rankedStructure:
-        print(c)
 
+    n = len(rankedStructure)
+    quickSort(rankedStructure, 0, n - 1)
+    print(rankedStructure)
 
 
     print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
