@@ -27,9 +27,18 @@ def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesen
         for x in dokumentiKojiImajuLinkKaDokumentu:
             if str(x[0]) == element:
                 for z in x[1]:
-                    brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, unesene_reci[0])
-
-        brojponavljanjaReci = brojPonavaljanjaReciuDatoteci(element, unesene_reci[0])
+                    for ureci in unesene_reci:
+                        brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, ureci)
+                    # brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, unesene_reci[0])
+                    # if len(unesene_reci) > 1:
+                    #     if unesene_reci[0] != unesene_reci[1]:
+                    #         brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavaljanjaReciuDatoteci(z, unesene_reci[0])
+        for urecii in unesene_reci:
+            brojponavljanjaReci = brojPonavaljanjaReciuDatoteci(element, urecii)
+        # brojponavljanjaReci = brojPonavaljanjaReciuDatoteci(element, unesene_reci[0])
+        # if len(unesene_reci) > 1:
+        #     if unesene_reci[0] != unesene_reci[1]:
+        #         brojponavljanjaReci = brojPonavaljanjaReciuDatoteci(element, unesene_reci[1])
 
         rank = [element, backlinks + (brojponavljanjaReci*0.7) + (brojponavljanjaReciuDatotekamaKojeLinkuju*0.4)]
         rankedStructure.append(rank)
@@ -40,8 +49,8 @@ def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesen
     #Kod koji radi ugradjeno sortiranje
     #rankedStructure.sort(reverse=True,key=takeSecond)
     #print(rankedStructure)
-    #Samostalna implementacija algoritma za sortiranje
 
+    #Samostalna implementacija algoritma za sortiranje u metodi quickSort
     n = len(rankedStructure)
     quickSort(rankedStructure, 0, n - 1)
     print(rankedStructure)
