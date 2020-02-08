@@ -25,7 +25,7 @@ def loadTrieViaHTML(path):
             if r".html" in filename:
                 # "Ova linija uzima filename, i spaja ga sa root directorijem, tako da dobijemo Absolute Path"
                 parser.parse(os.path.join(root, filename))
-                print(filename + " " + str(parser.words.__len__()))
+                #print(filename + " " + str(parser.words.__len__()))
                 for word in parser.words:
                     #if word.lower() == ""
                     add(trie.root, word.lower())

@@ -27,7 +27,7 @@ def loadGraphFromParser(path):
                 #"Ova linija uzima filename, i spaja ga sa root directorijem, tako da dobijemo Absolute Path"
                 absPath = os.path.join(root, filename)
                 parser.parse(os.path.join(root, filename))
-                print(filename + " " + str(parser.links.__len__()))
+                #print(filename + " " + str(parser.links.__len__()))
                 for links in parser.links:
                     for c in range(len(links)-1,0,-1):
                         if links[c] == "\\":

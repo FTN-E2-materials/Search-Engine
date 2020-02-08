@@ -44,7 +44,7 @@ if __name__ == '__main__':
                             a.append(str(e._origin))
                     dokumentiKojiImajuLinkKaDokumentu.append([str(v),a])
 
-                print(dokumentiKojiImajuLinkKaDokumentu)
+                # print(dokumentiKojiImajuLinkKaDokumentu)
             else:
                 print("Putanja nije validna!")
                 unos = ''
