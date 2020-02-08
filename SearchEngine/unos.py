@@ -8,6 +8,19 @@ import fnmatch, re
 from parserTrie.Parser import *
 from parserGraph.loadGraphFromParser import loadGraphFromParser
 
+
+# function to get unique values
+def unique(list1):
+    # intilize a null list
+    unique_list = []
+
+    # traverse for all elements
+    for x in list1:
+        # check if exists in unique_list or not
+        if x not in unique_list:
+            unique_list.append(x)
+    return unique_list
+
 def pretraga(unesene_reci,stablo,unos):
 
     if 'and' in unesene_reci:
@@ -18,14 +31,8 @@ def pretraga(unesene_reci,stablo,unos):
             Preko indeksa znam koja 2 elementa iz liste, trebaju obavezno da budu prilikom pretrage.
             t1,t2 - Tuple u kome cuvamo [uspesnost_trazenja, broj_pojavljivanja]
             """
-            print(unesene_reci)
-
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
-
-            # print("Imamo " + str(t1[1]) + " pojavljivanja reci " + unesene_reci[index-1] + " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
-            # print("Imamo " + str(t2[1]) + " pojavljivanja reci " + unesene_reci[index]+ " u fajlu \"TRENUTNO_NE_ZNAMO.html\"")
-
             if (t1[0] == True and t2[0] == True):
                 print("Obe reci su se pojavile!!!!")
                 setPodatka = Set('')
@@ -55,30 +62,38 @@ def pretraga(unesene_reci,stablo,unos):
 
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
-
-            if (t1[0] == True or t2[0] == True):
-                setPodatka = Set('')
-                resultSet = Set('')
-                if (t1[0] == True and t2[0] == True):
+            if unesene_reci[0] == unesene_reci[1]:
+                if (t1[0] == True ):
+                    setPodatka = Set('')
                     resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
-                    resultSet = proveriRecOR(resultSet, unos, unesene_reci[index])
-                    # resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
-                elif (t1[0] == True and t2[0] == False):
-                    resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
-                elif (t1[0] == False and t2[0] == True):
-                    resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
-
                 paginacija(resultSet)
                 globalResultSet = resultSet
-
             else:
-                print("Error: Obe reci se uopste nisu pojavile!!")
+
+                if (t1[0] == True or t2[0] == True):
+                    setPodatka = Set('')
+                    resultSet = Set('')
+                    if (t1[0] == True and t2[0] == True):
+                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
+                        resultSet = proveriRecOR(resultSet, unos, unesene_reci[index])
+                        # resultSet = proveriReciAND(setPodatka, unos, unesene_reci[index - 1], unesene_reci[index])
+                    elif (t1[0] == True and t2[0] == False):
+                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index - 1])
+                    elif (t1[0] == False and t2[0] == True):
+                        resultSet = proveriRecOR(setPodatka, unos, unesene_reci[index])
+
+                    paginacija(resultSet)
+                    globalResultSet = resultSet
+
+                else:
+                    print("Error: Obe reci se uopste nisu pojavile!!")
         else:
             print("Error: Nije unesena validna pretraga sa and operatorom")
 
     else:
         resultSet = Set('')
         pojavljivane_reci = []
+        unesene_reci = unique(unesene_reci)
         for i in range(len(unesene_reci)):
             t = find_prefix(stablo.root, unesene_reci[i])
             if (t[0] == True):
