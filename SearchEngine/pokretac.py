@@ -32,19 +32,16 @@ if __name__ == '__main__':
                 stablo,g = popunjavanjeStruktura(unos)
                 #g = loadGraphFromParser(unos)
                 V = g.vertices()
+
                 # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
                 dokumentiKojiImajuLinkKaDokumentu = [] # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
                 for v in V:
-                    # print("--------------- DOKUMENT: ", v, " ---------------")
-                    # print("DOKUMENTI KOJI IMAJU LINKA KA TOM DOKUMENTU: ")
                     a = []
                     for e in g.edges():
                         if str(v) == str(e._destination):
-                            #print(str(e._origin))
                             a.append(str(e._origin))
                     dokumentiKojiImajuLinkKaDokumentu.append([str(v),a])
 
-                # print(dokumentiKojiImajuLinkKaDokumentu)
             else:
                 print("Putanja nije validna!")
                 unos = ''
@@ -68,6 +65,7 @@ if __name__ == '__main__':
 
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
+    print("Pretraga prosla")
     #Rangiranje i stampanje pretrage
     rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
     #print(dokumentiKojiImajuLinkKaDokumentu)
