@@ -15,7 +15,7 @@ def ispisiStranicu(tekucaStranica,brPrikaza,setPod):
     for i in range(brPrikaza):
         j = (brPrikaza) * (int(tekucaStranica) - 1) + i
         if j < len(setPod.elements):
-            print("\t\t\t\t\t  " + setPod.elements[j])
+            print("\t\t\t\t\t  " + setPod.elements[j] + " pojavljivanja reci: " + str(setPod.brPojavljivanjaReci[j]))
         else:
             break
 
