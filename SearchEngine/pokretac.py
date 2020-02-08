@@ -6,9 +6,7 @@ from unos import *
 from rangiranjePretrage import rangiranjePretrage
 import fnmatch, re
 from unos import *
-from parserGraph.loadGraphFromParser import loadGraphFromParser
-from parserTrie.loadTriefromHTML import loadTrieViaHTML
-
+import time
 
 if __name__ == '__main__':
 
@@ -31,16 +29,6 @@ if __name__ == '__main__':
                 #stablo = loadTrieViaHTML(unos)
                 stablo,g = popunjavanjeStruktura(unos)
                 #g = loadGraphFromParser(unos)
-                V = g.vertices()
-
-                # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
-                dokumentiKojiImajuLinkKaDokumentu = [] # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
-                for v in V:
-                    a = []
-                    for e in g.edges():
-                        if str(v) == str(e._destination):
-                            a.append(str(e._origin))
-                    dokumentiKojiImajuLinkKaDokumentu.append([str(v),a])
 
             else:
                 print("Putanja nije validna!")
@@ -62,12 +50,37 @@ if __name__ == '__main__':
                 unosUpit = ''
 
     unesene_reci = unosUpit.split()
+    V = g.vertices()
 
+    # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
+    # dokumentiKojiImajuLinkKaDokumentu = []  # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
+    # for v in V:
+    #     a = []
+    #     for e in g.edges():
+    #         if str(v) == str(e._destination):
+    #             a.append(str(e._origin))
+    #     dokumentiKojiImajuLinkKaDokumentu.append([str(v), a])
+    dokumentiKojiImajuLinkKaDokumentu = {}
+    for v in V:
+        a = []
+        for e in g.edges():
+            if str(v) == str(e._destination):
+                a.append(str(e._origin))
+        dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
+
+    print(dokumentiKojiImajuLinkKaDokumentu)
+
+    start3 = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
+    end3 = time.time()
+    print("PRETRAGA: " + str((end3 - start3).__round__(2)) + " seconds.")
 
     print("Pretraga prosla")
     #Rangiranje i stampanje pretrage
+    start2 = time.time()
     rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
+    end2 = time.time()
+    print("RANGIRANJE: " + str((end2 - start2).__round__(2)) + " seconds.")
     #print(dokumentiKojiImajuLinkKaDokumentu)
     paginacija(rangiranSet)
 
