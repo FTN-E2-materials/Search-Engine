@@ -1,6 +1,6 @@
 from quickSortMultiList import quickSort
 from parserGraph.Parser import Parser
-
+from set import Set
 def brojPonavaljanjaReciuDatoteci(datoteka, rec: str):
     parser = Parser()
     parser.parse(datoteka)
@@ -15,7 +15,7 @@ def brojPonavaljanjaReciuDatoteci(datoteka, rec: str):
 
 # RANGIRANJE PRETRAGE
 def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g):
-    rankedStructure = [] #[ [elementizPretrage1, backlinks], [elementizPretrage2, backlinks]....]
+    rankedStructure = [] #[ [elementizPretrage1, poeni1], [elementizPretrage2, poeni2]....]
     for element in iter(globalResultSet):
         # za svaki element iz pretrage treba naci koliko cvorova pokazuje na njega u grafu
         backlinks = 0 #za svaki element iz pretrage restartujemo broj backlinkova
@@ -43,8 +43,6 @@ def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesen
         rank = [element, backlinks + (brojponavljanjaReci*0.7) + (brojponavljanjaReciuDatotekamaKojeLinkuju*0.4)]
         rankedStructure.append(rank)
 
-    for bpr in globalResultSet.brPojavljivanjaReci:
-        print(bpr)
 
     #Kod koji radi ugradjeno sortiranje
     #rankedStructure.sort(reverse=True,key=takeSecond)
@@ -53,9 +51,15 @@ def rangiranjePretrage(globalResultSet,dokumentiKojiImajuLinkKaDokumentu, unesen
     #Samostalna implementacija algoritma za sortiranje u metodi quickSort
     n = len(rankedStructure)
     quickSort(rankedStructure, 0, n - 1)
-    print(rankedStructure)
+    #print(rankedStructure)
 
 
-    print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
-    for elem in iter(rankedStructure):
-        print("\t\t\t\t\t  " , elem[0])
+    povratniSet = Set('')
+    for element in rankedStructure:
+        povratniSet.elements.append(element[0])
+        povratniSet.listaPoena.append(element[1])
+
+    return povratniSet
+    # print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
+    # for elem in iter(c):
+    #     print("\t\t\t\t\t  " , elem[0])

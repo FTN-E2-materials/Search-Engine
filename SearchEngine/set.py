@@ -6,7 +6,7 @@ Modul koji implementira strukturu podataka Set.
 class Set:
     def __init__(self, iterable):
         self.elements = lst = []
-        self.brPojavljivanjaReci = []          # lista/niz zabroj pojavljivanja pretrazivane reci
+        self.listaPoena = []          # lista/niz zabroj pojavljivanja pretrazivane reci
         for value in iterable:
             if value not in lst:
                 lst.append(value)

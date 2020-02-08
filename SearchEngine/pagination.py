@@ -1,4 +1,5 @@
 import math
+import fnmatch, re
 """
 Funkcija koja rounduje uvek na vecu cifru.
 """
@@ -15,7 +16,8 @@ def ispisiStranicu(tekucaStranica,brPrikaza,setPod):
     for i in range(brPrikaza):
         j = (brPrikaza) * (int(tekucaStranica) - 1) + i
         if j < len(setPod.elements):
-            print("\t\t\t\t\t  " + setPod.elements[j])
+            #print(len(setPod.elements[j]))
+            print('{:200}'.format("\t\t\t\t\t  " + setPod.elements[j]) + '{:5}'.format("\t\t poena: " +str(setPod.listaPoena[j])))
         else:
             break
 
@@ -35,6 +37,7 @@ def paginacija(setPod):
 
     meniUnos=''
     while meniUnos != 'x':
+        regexObj69 = re.compile("[0-9]{1,3}")
         print("\n\n")
         print("\t\t\t\t\t ---------------------------------- MENI ----------------------------------")
         print("\t\t\t\t\t Parametri - tekucaStranica: " +str(tekucaStranica)+ " , brojEntitetaPoStrani: " + str(brPrikaza) + " , N: "+str(stranicaN))
@@ -54,8 +57,12 @@ def paginacija(setPod):
             while unos2 == '':
                 print("Unesite koliko entiteta zelite prikazati na jednoj stranici[1-" + str(len(setPod)) + "]: ")
                 unos2 = input()
-                if int(unos2) < 1 or int(unos2) > len(setPod):
-                    print("Error: Molim vas da unesete validan broj entiteta po stranici.")
+                if regexObj69.fullmatch(unos2):
+                    if int(unos2) < 1 or int(unos2) > len(setPod):
+                        print("Error: Molim vas da unesete validan broj entiteta po stranici.")
+                        unos2 = ''
+                else:
+                    print("Molim vas da postujete format unosa.")
                     unos2 = ''
 
             brPrikaza = int(unos2)
@@ -65,20 +72,29 @@ def paginacija(setPod):
             while unos == '':
                 print("Pozicionirajte se odnosno unesite broj stranice koju zelite prikazati[1-" + str(ukupnoStranica) + "]: ")
                 unos = input()
-                if int(unos) < 1 or int(unos) > ukupnoStranica:
-                    print("Error: Ta stranica nije u opticaju.")
+                if regexObj69.fullmatch(unos):
+                    if int(unos) < 1 or int(unos) > ukupnoStranica:
+                        print("Error: Ta stranica nije u opticaju.")
+                        unos = ''
+                else:
+                    print("Molim vas da postujete format unosa.")
                     unos = ''
+
             tekucaStranica = int(unos)
 
             unosN = ''
             while unosN == '':
                 print("Unesite N[1-"+str(ukupnoStranica)+"]")
                 unosN = input()
-                if int(unosN) < 1 or int(unosN) > int(ukupnoStranica):
-                    print("Error: Izabrano N nije u opsegu validnih vrednosti N-a")
-                    unosN =''
+                if regexObj69.fullmatch(unosN):
+                    if int(unosN) < 1 or int(unosN) > int(ukupnoStranica):
+                        print("Error: Izabrano N nije u opsegu validnih vrednosti N-a")
+                        unosN =''
+                    else:
+                        stranicaN=int(unosN)
                 else:
-                    stranicaN=int(unosN)
+                    print("Molim vas da postujete format unosa.")
+                    unosN = ''
 
         elif meniUnos == str(2):
             tekucaStranica += stranicaN

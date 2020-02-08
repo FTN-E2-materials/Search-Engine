@@ -37,7 +37,6 @@ def pretraga(unesene_reci,stablo,unos):
 
                 globalResultSet = resultSet
                 paginacija(resultSet)
-
             else:
                 print("Error: Nisu se obe reci pojavile!!")
         else:
@@ -51,7 +50,7 @@ def pretraga(unesene_reci,stablo,unos):
             set2 = nadjiSet(unos, unesene_reci[index])
             resultSet = set1.complement(set2)
             globalResultSet = resultSet
-            paginacija(resultSet)
+            #paginacija(resultSet)
         else:
             print("Error: Nije unesena validna pretraga sa not operatorom")
     elif 'or' in unesene_reci:
@@ -65,8 +64,6 @@ def pretraga(unesene_reci,stablo,unos):
                 set1 = nadjiSet(unos,unesene_reci[index-1])
                 set2 = nadjiSet(unos,unesene_reci[index])
                 resultSet = set1.union(set2)
-
-                paginacija(resultSet)
                 globalResultSet = resultSet
             else:
                 print("Error: Obe reci se uopste nisu pojavile!!")
@@ -84,10 +81,6 @@ def pretraga(unesene_reci,stablo,unos):
                 set = nadjiSet(unos,unesene_reci[i])
                 resultSet = resultSet.union(set)
 
-        paginacija(resultSet)
-        print("\t\t\t\t\t Od unesenih reci, one koje su se zapravo pojavile su: " + str(pojavljivane_reci))
-        print(
-            "\t\t\t\t\t ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------")
         globalResultSet = resultSet
 
     return globalResultSet

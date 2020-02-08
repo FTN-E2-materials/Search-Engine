@@ -59,7 +59,7 @@ if __name__ == '__main__':
         unosUpit = input()
         if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj111.fullmatch(unosUpit):
-                print("Uneli ste validnu pretragu.")
+                print("")   # da nije prazan if samo
             else:
                 print("Niste uneli validnu pretragu!")
                 unosUpit = ''
@@ -69,7 +69,8 @@ if __name__ == '__main__':
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
     #Rangiranje i stampanje pretrage
-    rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
-
+    rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
+    #print(dokumentiKojiImajuLinkKaDokumentu)
+    paginacija(rangiranSet)
 
 
