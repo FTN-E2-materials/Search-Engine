@@ -7,6 +7,9 @@ from rangiranjePretrage import rangiranjePretrage
 import fnmatch, re
 from unos import *
 import time
+from parserGraph.Parser import Parser
+
+from SearchEngine.rangiranjePretrage import brojPonavaljanjaReciuDatoteci
 
 if __name__ == '__main__':
 
@@ -50,6 +53,8 @@ if __name__ == '__main__':
                 unosUpit = ''
 
     unesene_reci = unosUpit.split()
+
+
     V = g.vertices()
 
     # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
@@ -77,6 +82,11 @@ if __name__ == '__main__':
 
     start3 = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
+
+
+    print(brojPonavaljanjaReciuDatoteci(globalResultSet, unesene_reci))
+
+
     end3 = time.time()
     print("PRETRAGA: " + str((end3 - start3).__round__(2)) + " seconds.")
 
