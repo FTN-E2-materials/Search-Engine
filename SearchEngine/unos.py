@@ -19,7 +19,7 @@ def unique(list1):
     return unique_list
 
 def pretraga(unesene_reci,stablo,unos):
-
+    globalResultSet = Set('')
     if 'and' in unesene_reci:
         if len(unesene_reci) == 3:
             index = unesene_reci.index('and')
@@ -50,6 +50,7 @@ def pretraga(unesene_reci,stablo,unos):
             set2 = nadjiSet(unos, unesene_reci[index])
             resultSet = set1.complement(set2)
             globalResultSet = resultSet
+
             #paginacija(resultSet)
         else:
             print("Error: Nije unesena validna pretraga sa not operatorom")

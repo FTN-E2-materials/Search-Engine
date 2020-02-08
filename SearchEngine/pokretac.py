@@ -6,6 +6,8 @@ from unos import *
 from rangiranjePretrage import rangiranjePretrage
 import fnmatch, re
 from unos import *
+import sys
+
 import time
 from parserGraph.Parser import Parser
 
@@ -54,6 +56,11 @@ if __name__ == '__main__':
                 unosUpit = ''
 
     unesene_reci = unosUpit.split()
+    if len(unesene_reci) == 3:
+        if 'and' == unesene_reci[0] or 'or' == unesene_reci[0] or 'not' == unesene_reci[0] or 'and' == unesene_reci[2] or 'or' == unesene_reci[2] or 'not' == unesene_reci[2]:
+            print("Warning: Neispravno koriscenje logickih operatora")
+            sys.exit(0)
+
     V = g.vertices()
 
     dokumentiKojiImajuLinkKaDokumentu = {}
