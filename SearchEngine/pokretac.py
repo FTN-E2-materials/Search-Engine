@@ -2,10 +2,9 @@
 Modul koji predstavlja pokretacki deo aplikacije.
 
 """
-
 from unos import *
 from parserGraph.loadGraphFromParser import loadGraphFromParser
-from quickSortMultiList import quickSort
+from rangiranjePretrage import rangiranjePretrage
 
 if __name__ == '__main__':
 
@@ -30,13 +29,18 @@ if __name__ == '__main__':
                 g = loadGraphFromParser(unos)
                 V = g.vertices()
                 # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
+                dokumentiKojiImajuLinkKaDokumentu = [] # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
                 for v in V:
-                    print("--------------- DOKUMENT: ", v, " ---------------")
-
-                    print("DOKUMENTI KOJI IMAJU LINKA KA TOM DOKUMENTU: ")
+                    # print("--------------- DOKUMENT: ", v, " ---------------")
+                    # print("DOKUMENTI KOJI IMAJU LINKA KA TOM DOKUMENTU: ")
+                    a = []
                     for e in g.edges():
                         if str(v) == str(e._destination):
-                            print(str(e._origin))
+                            #print(str(e._origin))
+                            a.append(str(e._origin))
+                    dokumentiKojiImajuLinkKaDokumentu.append([str(v),a])
+
+                print(dokumentiKojiImajuLinkKaDokumentu)
             else:
                 print("Putanja nije validna!")
                 unos = ''
@@ -60,44 +64,9 @@ if __name__ == '__main__':
 
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
+    #Rangiranje i stampanje pretrage
+    rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
 
-
-    def takeSecond(elem):
-        return elem[1]
-
-    brojac = 0
-    # RANGIRANJE PRETRAGE
-    rankedStructure = [] #[ [elementizPretrage1, backlinks], [elementizPretrage2, backlinks]....]
-    for element in iter(globalResultSet):
-        # za svaki element iz pretrage treba naci koliko cvorova pokazuje na njega u grafu
-        backlinks = 0 #za svaki element iz pretrage restartujemo broj backlinkova
-        for e in g.edges():
-            if str(e._destination) == element:
-                backlinks = backlinks + 1
-
-
-        rank = [element, backlinks + (globalResultSet.brPojavljivanjaReci[brojac]*0.7)]
-        brojac = brojac + 1
-        rankedStructure.append(rank)
-
-    for bpr in globalResultSet.brPojavljivanjaReci:
-        print(bpr)
-
-    #Kod koji radi ugradjeno sortiranje
-    #rankedStructure.sort(reverse=True,key=takeSecond)
-    #print(rankedStructure)
-    #Samostalna implementacija algoritma za sortiranje
-
-    n = len(rankedStructure)
-    quickSort(rankedStructure, 0, n - 1)
-    print(rankedStructure)
-
-
-    print("\t\t\t\t\t --------------------------------------------------------------------------------- REZULTAT RANGIRANE PRETRAGE -----------------------------------------------------------------------------------")
-    for elem in iter(rankedStructure):
-        print("\t\t\t\t\t  " , elem[0])
-
-    #globalResultSet = resultSet
 
 
 

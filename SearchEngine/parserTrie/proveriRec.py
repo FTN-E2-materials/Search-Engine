@@ -91,3 +91,14 @@ def proveriRecOR(setPod,path,rec1: str):
                             indx=resultSet.elements.index(absPath)
                             resultSet.brPojavljivanjaReci[indx] += 1
     return resultSet
+
+def brojPonavaljanjaReciuDatoteci(datoteka, rec : str):
+    parser = Parser()
+    parser.parse(datoteka)
+    brojPonavljanja = 0
+
+    for word in parser.words:
+        if rec.lower() == word.lower():
+            brojPonavljanja = brojPonavljanja+1
+
+    return brojPonavljanja
