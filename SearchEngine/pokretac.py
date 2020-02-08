@@ -9,12 +9,13 @@ from unos import *
 import time
 from parserGraph.Parser import Parser
 
-from SearchEngine.rangiranjePretrage import brojPonavaljanjaReciuDatoteci
+from rangiranjePretrage import brojPonavaljanjaReciuDatoteci
 
 if __name__ == '__main__':
 
     globalResultSet = Set('')
     resultSet = Set('')
+    setSvihDatoteka = Set('')
     stablo = Tree()
     unos = ''
     # petlja ce da se izvrsava sve dok korisnik ne unese nesto
@@ -30,7 +31,7 @@ if __name__ == '__main__':
             if regexObj1.match(unos) or regexObj2.match(unos):
                 print("Please wait...")
                 #stablo = loadTrieViaHTML(unos)
-                stablo,g = popunjavanjeStruktura(unos)
+                stablo,g,setSvihDatoteka = popunjavanjeStruktura(unos)
                 #g = loadGraphFromParser(unos)
 
             else:

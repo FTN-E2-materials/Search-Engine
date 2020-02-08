@@ -6,7 +6,7 @@ from parserTrie.Parser import Parser
 from parserTrie.Tree import TreeNode
 from parserGraph.Parser import Parser
 from parserGraph.Graph import *
-
+from set import Set
 def popunjavanjeStruktura(path):
     trie = Tree()
     parser = Parser()
@@ -25,11 +25,12 @@ def popunjavanjeStruktura(path):
     trie.root = TreeNode('*')
     E = []
     link = ''
-
+    setSvihDatoteka = Set('')
     for root, dirs, files in os.walk(path, topdown=False):
         for filename in files:
             if r".html" in filename:
                 absPath = os.path.join(root, filename)
+                setSvihDatoteka.elements.append(absPath)
                 parser.parse(os.path.join(root, filename))
                 for word in parser.words:
                     add(trie.root, word.lower())
@@ -43,4 +44,4 @@ def popunjavanjeStruktura(path):
     g = add_elements_to_Graph(E, directed)
     end = time.time()
     print("Parsed files and loaded the Trie and Graph structure in " + str((end - start).__round__(2)) + " seconds.")
-    return trie,g
+    return trie,g,setSvihDatoteka
