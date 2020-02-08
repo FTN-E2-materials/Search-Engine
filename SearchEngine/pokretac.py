@@ -1,10 +1,14 @@
 """
 Modul koji predstavlja pokretacki deo aplikacije.
-
 """
+
+from unos import *
+from rangiranjePretrage import rangiranjePretrage
+import fnmatch, re
 from unos import *
 from parserGraph.loadGraphFromParser import loadGraphFromParser
-from rangiranjePretrage import rangiranjePretrage
+from parserTrie.loadTriefromHTML import loadTrieViaHTML
+
 
 if __name__ == '__main__':
 
@@ -66,8 +70,6 @@ if __name__ == '__main__':
 
     #Rangiranje i stampanje pretrage
     rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu, unesene_reci,g)
-
-
 
 
 
