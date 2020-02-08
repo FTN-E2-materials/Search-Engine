@@ -28,7 +28,7 @@ if __name__ == '__main__':
         unos = input()
         if unos != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj1.match(unos) or regexObj2.match(unos):
-                print("Validna putanja!")
+                print("Please wait...")
                 #stablo = loadTrieViaHTML(unos)
                 stablo,g = popunjavanjeStruktura(unos)
                 #g = loadGraphFromParser(unos)
@@ -47,24 +47,14 @@ if __name__ == '__main__':
         unosUpit = input()
         if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj111.fullmatch(unosUpit):
-                print("")   # da nije prazan if samo
+                print("Please wait...")
             else:
                 print("Niste uneli validnu pretragu!")
                 unosUpit = ''
 
     unesene_reci = unosUpit.split()
-
-
     V = g.vertices()
 
-    # dokumenti koji imaju link ka dokumentu X,dokumenti ka kojima dokument X ima link i proizvoljne informacije
-    # dokumentiKojiImajuLinkKaDokumentu = []  # [ [datoteka.html,[....lista datoteka....]], [datoteka.html,[....lista datoteka....]]... ]
-    # for v in V:
-    #     a = []
-    #     for e in g.edges():
-    #         if str(v) == str(e._destination):
-    #             a.append(str(e._origin))
-    #     dokumentiKojiImajuLinkKaDokumentu.append([str(v), a])
     dokumentiKojiImajuLinkKaDokumentu = {}
     bekLinkovi = {}
     for v in V:
@@ -78,25 +68,13 @@ if __name__ == '__main__':
         dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
         bekLinkovi[str(v)] = backlinks
 
-    print(bekLinkovi)
 
-    start3 = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
 
-
-    print(brojPonavaljanjaReciuDatoteci(globalResultSet, unesene_reci))
-
-
-    end3 = time.time()
-    print("PRETRAGA: " + str((end3 - start3).__round__(2)) + " seconds.")
-
-    print("Pretraga prosla")
     #Rangiranje i stampanje pretrage
-    start2 = time.time()
     rangiranSet = rangiranjePretrage(globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
-    end2 = time.time()
-    print("RANGIRANJE: " + str((end2 - start2).__round__(2)) + " seconds.")
-    #print(dokumentiKojiImajuLinkKaDokumentu)
+
+
     paginacija(rangiranSet)
 
 
