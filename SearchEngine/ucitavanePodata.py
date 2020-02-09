@@ -37,7 +37,7 @@ def popunjavanjeStruktura(path):
 
                 for links in parser.links:
                     for c in range(len(links)-1,0,-1):
-                        if links[c] == "\\":
+                        if links[c] == "\\" or links[c] == "/":
                             link = links
                             E.append([absPath, link, links])
                             break
