@@ -26,6 +26,7 @@ def popunjavanjeStruktura(path):
     trie.root = TreeNode('*')
     E = []
     link = ''
+    recnikStranicaReci = dict()
     setSvihDatoteka = Set('')
     for root, dirs, files in os.walk(path, topdown=False):
         for filename in files:
@@ -42,7 +43,13 @@ def popunjavanjeStruktura(path):
                             link = links
                             E.append([absPath, link, links])
                             break
+                recnikStranicaReci[absPath] = parser.words
+                #print ("dict['Name']: ", recnikStranicaReci[absPath])
+                #print("\n\n")
+
+
+
     g = add_elements_to_Graph(E, directed)
     end = time.time()
     print("Parsed files and loaded the Trie and Graph structure in " + str((end - start).__round__(2)) + " seconds.")
-    return trie,g,setSvihDatoteka
+    return trie,g,setSvihDatoteka, recnikStranicaReci

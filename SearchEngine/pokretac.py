@@ -32,7 +32,7 @@ if __name__ == '__main__':
             if regexObj1.match(unos) or regexObj2.match(unos):
                 print("Please wait...")
                 #stablo = loadTrieViaHTML(unos)
-                stablo,g,setSvihDatoteka = popunjavanjeStruktura(unos)
+                stablo,g,setSvihDatoteka,recnikStranicaReci = popunjavanjeStruktura(unos)
                 #g = loadGraphFromParser(unos)
 
             else:
@@ -59,9 +59,8 @@ if __name__ == '__main__':
         if 'and' == unesene_reci[0] or 'or' == unesene_reci[0] or 'not' == unesene_reci[0] or 'and' == unesene_reci[2] or 'or' == unesene_reci[2] or 'not' == unesene_reci[2]:
             print("Warning: Neispravno koriscenje logickih operatora")
             sys.exit(0)
-
+    start1 = time.time()
     V = g.vertices()
-
     dokumentiKojiImajuLinkKaDokumentu = {}
     bekLinkovi = {}
     for v in V:
@@ -74,6 +73,8 @@ if __name__ == '__main__':
 
         dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
         bekLinkovi[str(v)] = backlinks
+    end1 = time.time()
+    print("Za neko izvrsavanje pre pretrage je potrebno " + str((end1 - start1).__round__(2))+" sekundi.")
 
     start = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
@@ -83,7 +84,7 @@ if __name__ == '__main__':
     if len(globalResultSet.elements) != 0:
     #Rangiranje i stampanje pretrage
         start = time.time()
-        rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
+        rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci,recnikStranicaReci)
         end = time.time()
         print("Za rangiranje pretrage je potrebno " + str((end - start).__round__(2)) + " sekundi.")
         paginacija(rangiranSet)
