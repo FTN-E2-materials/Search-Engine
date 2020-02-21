@@ -1,9 +1,9 @@
 
 from pagination import paginacija
-from parserTrie.findset import *
+from SearchEngine.parserTrie.findset import *
 
-from set import *
-from parserTrie.Tree import *
+from SearchEngine.set import *
+from SearchEngine.parserTrie.Tree import *
 
 
 # function to get unique values
@@ -30,9 +30,15 @@ def pretraga(unesene_reci,stablo,unos):
             """
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
+
+            # for e in t1[2]:
+            #     print(e)
+
             if (t1[0] == True and t2[0] == True):
-                set1 = nadjiSet(unos, unesene_reci[index - 1])
-                set2 = nadjiSet(unos, unesene_reci[index])
+                #set1 = nadjiSet(unos, unesene_reci[index - 1])
+                #set2 = nadjiSet(unos, unesene_reci[index])
+                set1 = t1[2]
+                set2 = t2[2]
                 resultSet = set1.intersection(set2)
 
                 globalResultSet = resultSet
@@ -46,8 +52,14 @@ def pretraga(unesene_reci,stablo,unos):
             index = unesene_reci.index('not')
             unesene_reci.remove('not')
 
-            set1 = nadjiSet(unos, unesene_reci[index - 1])
-            set2 = nadjiSet(unos, unesene_reci[index])
+            t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+            t2 = find_prefix(stablo.root, unesene_reci[index])
+
+            # set1 = nadjiSet(unos, unesene_reci[index - 1])
+            # set2 = nadjiSet(unos, unesene_reci[index])
+            set1 = t1[2]
+            set2 = t2[2]
+
             resultSet = set1.complement(set2)
             globalResultSet = resultSet
 
@@ -62,8 +74,13 @@ def pretraga(unesene_reci,stablo,unos):
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
             if (t1[0] == True or t2[0] == True):
-                set1 = nadjiSet(unos,unesene_reci[index-1])
-                set2 = nadjiSet(unos,unesene_reci[index])
+                # set1 = nadjiSet(unos,unesene_reci[index-1])
+                # set2 = nadjiSet(unos,unesene_reci[index])
+                t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+                t2 = find_prefix(stablo.root, unesene_reci[index])
+                set1 = t1[2]
+                set2 = t2[2]
+
                 resultSet = set1.union(set2)
                 globalResultSet = resultSet
             else:
@@ -79,7 +96,9 @@ def pretraga(unesene_reci,stablo,unos):
             t = find_prefix(stablo.root, unesene_reci[i])
             if (t[0] == True):
                 pojavljivane_reci.append(unesene_reci[i])
-                set = nadjiSet(unos,unesene_reci[i])
+
+                #set = nadjiSet(unos,unesene_reci[i])
+                set = t[2]
                 resultSet = resultSet.union(set)
 
         globalResultSet = resultSet

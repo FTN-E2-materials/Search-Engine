@@ -3,12 +3,13 @@ Modul sadrži implementaciju stabla.
 """
 from queue import Queue
 from typing import Tuple
+from SearchEngine.set import *
 
 class TreeNode(object):
     """
     Klasa modeluje čvor stabla.
     """
-    __slots__ = 'parent', 'children', 'char', 'word_finished', 'counter'
+    __slots__ = 'parent', 'children', 'char', 'word_finished', 'counter', 'setOfWord'
 
     def __init__(self, char: str):
         self.char = char
@@ -17,6 +18,8 @@ class TreeNode(object):
         self.word_finished = False
         # How many times this character appeared in the addition process
         self.counter = 1
+        # All links for that word
+        self.setOfWord = Set('')
 
     def is_root(self):
         """
@@ -82,46 +85,6 @@ class Tree(object):
         else:
             return 1 + max(self.height(c) for c in x.children)
 
-    def preorder(self, x):
-        """
-        Preorder obilazak po dubini
-
-        Najpre se vrši obilazak roditelja a zatim svih njegovih potomaka.
-
-        Argument:
-        - `x`: čvor od koga počinje obilazak
-        """
-        if not self.is_empty():
-            print(x.char)
-            for c in x.children:
-                self.preorder(c)
-
-    def postorder(self, x):
-        """
-        Postorder obilazak po dubini
-
-        Najpre se vrši obilazak potomaka a zatim i roditelja
-
-        Argument:
-        - `x`: čvor od koga počinje obilazak
-        """
-        if not self.is_empty():
-            for c in x.children:
-                self.postorder(c)
-            print(x.char)
-
-    def breadth_first(self):
-        """
-        Metoda vrši obilazak stabla po širini.
-        """
-        to_visit = Queue()
-        to_visit.enqueue(self.root)
-        while not to_visit.is_empty():
-            e = to_visit.dequeue()
-            print(e.char)
-
-            for c in e.children:
-                to_visit.enqueue(c)
 
     def __iter__(self):
         to_visit = Queue()
@@ -134,7 +97,7 @@ class Tree(object):
                 to_visit.enqueue(c)
 
 
-def add(root, word: str):
+def add(root, word: str, link):
     """
     Adding a word in the trie structure
     """
@@ -158,10 +121,12 @@ def add(root, word: str):
             # And then point node to the new child
             node = new_node
     # Everything finished. Mark it as the end of a word.
+    if link not in node.setOfWord.elements:
+        node.setOfWord.elements.append(link)
     node.word_finished = True
 
 
-def find_prefix(root, prefix: str) -> Tuple[bool, int]:
+def find_prefix(root, prefix: str):
     """
     Check and return 
       1. If the prefix exsists in any of the words we added so far
@@ -188,4 +153,4 @@ def find_prefix(root, prefix: str) -> Tuple[bool, int]:
     # Well, we are here means we have found the prefix. Return true to indicate that
     # And also the counter of the last node. This indicates how many words have this
     # prefix
-    return True, node.counter
+    return True, node.counter, node.setOfWord

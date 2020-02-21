@@ -1,6 +1,6 @@
-from quickSortMultiList import quickSort
-from parserGraph.Parser import Parser
-from set import Set
+from SearchEngine.quickSortMultiList import quickSort
+from SearchEngine.parserGraph.Parser import Parser
+from SearchEngine.set import Set
 import time
 
 # def brojPonavaljanjaReciuDatoteci(datoteka, unesene_reci):

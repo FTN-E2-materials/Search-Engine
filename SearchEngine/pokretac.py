@@ -1,17 +1,16 @@
 """
 Modul koji predstavlja pokretacki deo aplikacije.
 """
-from ucitavanePodata import popunjavanjeStruktura
-from unos import *
-from rangiranjePretrage import rangiranjePretrage
+from SearchEngine.ucitavanePodata import popunjavanjeStruktura
+from SearchEngine.unos import *
+from SearchEngine.rangiranjePretrage import rangiranjePretrage
+from SearchEngine.pagination import *
 import fnmatch, re
-from unos import *
+from SearchEngine.unos import *
 import sys
 
 import time
-from parserGraph.Parser import Parser
 
-from rangiranjePretrage import brojPonavaljanjaReciuDatoteci
 
 if __name__ == '__main__':
 
@@ -76,11 +75,17 @@ if __name__ == '__main__':
         dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
         bekLinkovi[str(v)] = backlinks
 
-
+    start = time.time()
     globalResultSet = pretraga(unesene_reci,stablo,unos)
+    end = time.time()
+    print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
+
     if len(globalResultSet.elements) != 0:
     #Rangiranje i stampanje pretrage
+        start = time.time()
         rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci)
+        end = time.time()
+        print("Za rangiranje pretrage je potrebno " + str((end - start).__round__(2)) + " sekundi.")
         paginacija(rangiranSet)
     else:
         print("Not successful search!")

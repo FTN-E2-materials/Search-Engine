@@ -1,12 +1,13 @@
 import os
 import time
 
-from parserTrie.Tree import *
-from parserTrie.Parser import Parser
-from parserTrie.Tree import TreeNode
-from parserGraph.Parser import Parser
-from parserGraph.Graph import *
-from set import Set
+from SearchEngine.parserTrie.Tree import *
+from SearchEngine.parserTrie.Parser import Parser
+from SearchEngine.parserTrie.Tree import TreeNode
+from SearchEngine.parserGraph.Parser import Parser
+from SearchEngine.parserGraph.Graph import *
+#from .set import Set
+from SearchEngine.set import *
 def popunjavanjeStruktura(path):
     trie = Tree()
     parser = Parser()
@@ -33,7 +34,7 @@ def popunjavanjeStruktura(path):
                 setSvihDatoteka.elements.append(absPath)
                 parser.parse(os.path.join(root, filename))
                 for word in parser.words:
-                    add(trie.root, word.lower())
+                    add(trie.root, word.lower(),absPath)
 
                 for links in parser.links:
                     for c in range(len(links)-1,0,-1):
