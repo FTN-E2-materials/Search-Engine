@@ -20,13 +20,14 @@ def unique(list1):
 
 def pretraga(unesene_reci,stablo,unos):
     globalResultSet = Set('')
+    skupoviHTMLstranica = []
     if 'and' in unesene_reci:
         if len(unesene_reci) == 3:
             index = unesene_reci.index('and')
             unesene_reci.remove('and')
             """
             Preko indeksa znam koja 2 elementa iz liste, trebaju obavezno da budu prilikom pretrage.
-            t1,t2 - Tuple u kome cuvamo [uspesnost_trazenja, broj_pojavljivanja]
+            t1,t2 - Cuvamo dvojku [uspesnost_trazenja, broj_pojavljivanja]
             """
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
@@ -37,8 +38,12 @@ def pretraga(unesene_reci,stablo,unos):
             if (t1[0] == True and t2[0] == True):
                 #set1 = nadjiSet(unos, unesene_reci[index - 1])
                 #set2 = nadjiSet(unos, unesene_reci[index])
+
                 set1 = t1[2]
                 set2 = t2[2]
+                skupoviHTMLstranica.append(set1)
+                skupoviHTMLstranica.append(set2)
+
                 resultSet = set1.intersection(set2)
 
                 globalResultSet = resultSet
@@ -59,6 +64,9 @@ def pretraga(unesene_reci,stablo,unos):
             # set2 = nadjiSet(unos, unesene_reci[index])
             set1 = t1[2]
             set2 = t2[2]
+
+            skupoviHTMLstranica.append(set1)
+            skupoviHTMLstranica.append(set2)
 
             resultSet = set1.complement(set2)
             globalResultSet = resultSet
@@ -81,6 +89,9 @@ def pretraga(unesene_reci,stablo,unos):
                 set1 = t1[2]
                 set2 = t2[2]
 
+                skupoviHTMLstranica.append(set1)
+                skupoviHTMLstranica.append(set2)
+
                 resultSet = set1.union(set2)
                 globalResultSet = resultSet
             else:
@@ -99,6 +110,9 @@ def pretraga(unesene_reci,stablo,unos):
 
                 #set = nadjiSet(unos,unesene_reci[i])
                 set = t[2]
+
+                skupoviHTMLstranica.append(set)
+
                 resultSet = resultSet.union(set)
 
         globalResultSet = resultSet
