@@ -47,6 +47,7 @@ if __name__ == '__main__':
 
         print("Unesite pretragu:")
         unosUpit = input()
+        unosUpit = unosUpit.strip().lower()
         if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj111.fullmatch(unosUpit):
                 print("Please wait...")
@@ -59,14 +60,18 @@ if __name__ == '__main__':
         if 'and' == unesene_reci[0] or 'or' == unesene_reci[0] or 'not' == unesene_reci[0] or 'and' == unesene_reci[2] or 'or' == unesene_reci[2] or 'not' == unesene_reci[2]:
             print("Warning: Neispravno koriscenje logickih operatora")
             sys.exit(0)
+
     start1 = time.time()
     V = g.vertices()
     dokumentiKojiImajuLinkKaDokumentu = {}
     bekLinkovi = {}
+    i = 0
     for v in V:
+        print(v)
         backlinks = 0
         a = []
         for e in g.edges():
+            #print("\t\t"+str(e))
             if str(v) == str(e._destination):
                 a.append(str(e._origin))
                 backlinks = backlinks + 1
