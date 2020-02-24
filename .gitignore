@@ -1,2 +1,6 @@
 .idea
 SearchEngine/__pycache__
+SearchEngine/naprednap/__pycache__
+SearchEngine/parserGraph/__pycache__
+SearchEngine/parserTrie/__pycache__
+test-skup

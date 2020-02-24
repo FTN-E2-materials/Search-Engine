@@ -102,7 +102,7 @@ if __name__ == '__main__':
             unesene_reci = unosUpit.split()
 
             start = time.time()
-            globalResultSet = np.parse(unosUpit).evaluiraj(setSvihDatoteka, stablo)
+            globalResultSet = np.parsiraj(unosUpit).evaluiraj(setSvihDatoteka, stablo)
             print(len(globalResultSet))
             end = time.time()
             print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
