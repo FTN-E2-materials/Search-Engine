@@ -45,8 +45,8 @@ def pretraga(unesene_reci,stablo,unos):
                 skupoviHTMLstranica.append(set1)
                 skupoviHTMLstranica.append(set2)
 
-                resultSet = set1.intersection(set2)
-
+                #resultSet = set1.intersection(set2)
+                resultSet = set1 & set2
                 globalResultSet = resultSet
                 #paginacija(resultSet)
             else:
@@ -68,8 +68,8 @@ def pretraga(unesene_reci,stablo,unos):
 
             skupoviHTMLstranica.append(set1)
             skupoviHTMLstranica.append(set2)
-
-            resultSet = set1.complement(set2)
+            resultSet = set1 - set2
+            #resultSet = set1.complement(set2)
             globalResultSet = resultSet
 
             #paginacija(resultSet)
@@ -113,8 +113,8 @@ def pretraga(unesene_reci,stablo,unos):
                 set = t[2]
 
                 skupoviHTMLstranica.append(set)
-
-                resultSet = resultSet.union(set)
+                resultSet = resultSet | set
+                #resultSet = resultSet.union(set)
 
         globalResultSet = resultSet
 
