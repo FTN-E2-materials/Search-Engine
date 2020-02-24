@@ -47,19 +47,19 @@ if __name__ == '__main__':
             start = time.time()
             globalResultSet = pretraga(unesene_reci, stablo, unos)
             end = time.time()
-            print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
+            #print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
             #break
         if indexPretrage == str(2):
-            print("Unesite pretragu:")
-            unosUpit = input()
+            unosUpit = input("Unesite pretragu:")
             unosUpit = unosUpit.strip().lower()
             unesene_reci = unosUpit.split()
+            print("Please wait...")
 
             start = time.time()
             globalResultSet = np.parsiraj(unosUpit).evaluiraj(setSvihDatoteka, stablo)
-            print(len(globalResultSet))
+            #print(len(globalResultSet))
             end = time.time()
-            print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
+            #print("Za pretragu je potrebno " + str((end - start).__round__(2)) + " sekundi.")
 
             #break
 
@@ -70,7 +70,7 @@ if __name__ == '__main__':
             start = time.time()
             rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu, bekLinkovi, unesene_reci,recnikStranicaReci)
             end = time.time()
-            print("Za rangiranje pretrage je potrebno " + str((end - start).__round__(2)) + " sekundi.")
+            #print("Za rangiranje pretrage je potrebno " + str((end - start).__round__(2)) + " sekundi.")
             paginacija(rangiranSet)
         else:
             print("Not successful search!")

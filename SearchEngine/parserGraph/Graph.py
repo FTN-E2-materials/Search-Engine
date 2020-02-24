@@ -1,3 +1,4 @@
+from SearchEngine.set import *
 class Graph:
 
     def __init__(self, directed=False):
@@ -121,10 +122,11 @@ def add_elements_to_Graph(E, directed=True):
     cvoroviKraja = dict()                       # dvojka [ dokumentX, listaDokumenata_ka_kojima_on_pokazuje]
     bekLinkovi = {}
     g = Graph(directed)
-    V = set()
+    #V = set()
+    V = Set('')
     for e in E:
-        V.add(e[0])
-        V.add(e[1])
+        V.elements.append(e[0])
+        V.elements.append(e[1])
 
 
     vertices = {}  # izbegavamo ponavljanje labela između čvorova

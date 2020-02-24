@@ -150,8 +150,7 @@ def unosProstePretrage():
         # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
         regexObj111 = re.compile("(([\w]+\s){1}(and|or|not){1}(\s[\w]+){1})|([\w\s]+)")
 
-        print("Unesite pretragu:")
-        unosUpit = input()
+        unosUpit = input("Unesite pretragu:")
         unosUpit = unosUpit.strip().lower()
         if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
             if regexObj111.fullmatch(unosUpit):

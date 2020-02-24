@@ -1,28 +1,11 @@
 from SearchEngine.quickSortMultiList import quickSort
-from SearchEngine.parserGraph.Parser import Parser
 from SearchEngine.set import Set
 import time
-
-# def brojPonavaljanjaReciuDatoteci(datoteka, unesene_reci):
-#     parser = Parser()
-#     parser.parse(datoteka)
-#     brojPonavljanja = 0
-#
-#     for word in parser.words:
-#         for ureci in unesene_reci:
-#             if ureci.lower() not in ['and', 'or', 'not']:
-#                 if ureci.lower() == word.lower():
-#                     brojPonavljanja = brojPonavljanja + 1
-#     return brojPonavljanja
 
 brojPonavljanjaUnetihReci = {}
 def brojPonavaljanjaReciuDatoteci(globalResultSet, unesene_reci, recnikStranicaReci):
     start = time.time()
     for datoteka in globalResultSet:
-        #print("DATOTEKA: " + datoteka)
-        #print(recnikStranicaReci[datoteka])
-        #parser = Parser()
-        #parser.parse(datoteka)
         reci = recnikStranicaReci[datoteka]
 
         brojPonavljanja = 0
@@ -46,17 +29,6 @@ def rangiranjePretrage(setSvihDatoteka,globalResultSet,dokumentiKojiImajuLinkKaD
 
     for element in iter(globalResultSet):
         brojponavljanjaReciuDatotekamaKojeLinkuju = 0
-
-        # print("U RANGIRANJU SMO")
-        # print(element)
-        # print("clanovi dokumenata..")
-        # for dok in dokumentiKojiImajuLinkKaDokumentu:
-        #     print(dok)
-        # #print(dokumentiKojiImajuLinkKaDokumentu)
-        #
-        # print(dokumentiKojiImajuLinkKaDokumentu[element])
-        # print("\n")
-
 
         for z in dokumentiKojiImajuLinkKaDokumentu[element]:
             brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavljanjaUnetihReciDict[z]
