@@ -1,61 +1,15 @@
 """
 Modul koji predstavlja pokretacki deo aplikacije.
 """
-from SearchEngine.ucitavanePodata import popunjavanjeStruktura
+
 from SearchEngine.unos import *
 from SearchEngine.rangiranjePretrage import rangiranjePretrage
 from SearchEngine.pagination import *
 from SearchEngine.naprednap.napredna_pretraga import *
-
-import fnmatch, re
 from SearchEngine.unos import *
 import sys
-
 import time
 
-
-def unosPutanje():
-    unos = ''
-    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
-    while unos == '':
-        regexPattern1 = fnmatch.translate('[A-Z]:\*')
-        regexPattern2 = fnmatch.translate('/*')
-        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
-        regexObj1 = re.compile(regexPattern1)
-        regexObj2 = re.compile(regexPattern2)
-        print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
-        unos = input()
-        if unos != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
-            if regexObj1.match(unos) or regexObj2.match(unos):
-                print("Please wait...")
-                # stablo = loadTrieViaHTML(unos)
-                stablo, g, setSvihDatoteka, recnikStranicaReci = popunjavanjeStruktura(unos)
-                # g = loadGraphFromParser(unos)
-
-            else:
-                print("Putanja nije validna!")
-                unos = ''
-    return stablo,g,setSvihDatoteka,recnikStranicaReci, unos
-
-def unosProstePretrage():
-    unosUpit = ''
-    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
-    while unosUpit == '':
-        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
-        regexObj111 = re.compile("(([\w]+\s){1}(and|or|not){1}(\s[\w]+){1})|([\w\s]+)")
-
-        print("Unesite pretragu:")
-        unosUpit = input()
-        unosUpit = unosUpit.strip().lower()
-        if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
-            if regexObj111.fullmatch(unosUpit):
-                print("Please wait...")
-            else:
-                print("Niste uneli validnu pretragu!")
-                unosUpit = ''
-
-    unesene_reci = unosUpit.split()
-    return unesene_reci
 
 if __name__ == '__main__':
     np = NasParser()

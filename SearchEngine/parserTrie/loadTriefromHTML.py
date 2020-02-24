@@ -1,9 +1,9 @@
 import os
 import time
 
-from parserTrie.Tree import *
-from parserTrie.Parser import Parser
-from parserTrie.Tree import TreeNode
+from SearchEngine.parserTrie.Tree import *
+from SearchEngine.parserTrie.Parser import Parser
+from SearchEngine.parserTrie.Tree import TreeNode
 
 def loadTrieViaHTML(path):
     trie = Tree()
@@ -12,13 +12,6 @@ def loadTrieViaHTML(path):
     # path = "C:\\Users\\Pufke\\Desktop\\OISISI-drugi-projektni-zadatak\\SearchEngine\\test-skup\\python-2.7.7-docs-html"
 
     start = time.time()
-    """
-        OS.Walk() prolazi kroz ceo zadati direktorijum i belezi imena fajlova, kao i path do njih.
-        Zatim pomocu for petlje, uzimamo svaki .html fajl koji smo pronasli i parsiramo ga.
-        Nakon sto isparsiramo svaki, u okviru polja parser.words ce se nalaziti Array Stringova koji predstavljaju
-        reci. Taj Array onda prosledimo strukturi Trie, koja svaku rec ponaosob ubacuje u strukturu.
-        Loop se ponavlja za svaki .html fajl dok ne popunimo drvo u potpunosti.
-    """
     trie.root = TreeNode('*')
     for root, dirs, files in os.walk(path, topdown=False):
         for filename in files:
