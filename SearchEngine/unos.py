@@ -135,13 +135,13 @@ def unosPutanje():
             if regexObj1.match(unos) or regexObj2.match(unos):
                 print("Please wait...")
                 # stablo = loadTrieViaHTML(unos)
-                stablo, g, setSvihDatoteka, recnikStranicaReci = popunjavanjeStruktura(unos)
+                stablo, g, setSvihDatoteka, recnikStranicaReci,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi = popunjavanjeStruktura(unos)
                 # g = loadGraphFromParser(unos)
 
             else:
                 print("Putanja nije validna!")
                 unos = ''
-    return stablo,g,setSvihDatoteka,recnikStranicaReci, unos
+    return stablo,g,setSvihDatoteka,recnikStranicaReci, unos, dokumentiKojiImajuLinkKaDokumentu, bekLinkovi
 
 def unosProstePretrage():
     unosUpit = ''

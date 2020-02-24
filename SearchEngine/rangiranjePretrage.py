@@ -46,6 +46,18 @@ def rangiranjePretrage(setSvihDatoteka,globalResultSet,dokumentiKojiImajuLinkKaD
 
     for element in iter(globalResultSet):
         brojponavljanjaReciuDatotekamaKojeLinkuju = 0
+
+        # print("U RANGIRANJU SMO")
+        # print(element)
+        # print("clanovi dokumenata..")
+        # for dok in dokumentiKojiImajuLinkKaDokumentu:
+        #     print(dok)
+        # #print(dokumentiKojiImajuLinkKaDokumentu)
+        #
+        # print(dokumentiKojiImajuLinkKaDokumentu[element])
+        # print("\n")
+
+
         for z in dokumentiKojiImajuLinkKaDokumentu[element]:
             brojponavljanjaReciuDatotekamaKojeLinkuju = brojponavljanjaReciuDatotekamaKojeLinkuju + brojPonavljanjaUnetihReciDict[z]
 

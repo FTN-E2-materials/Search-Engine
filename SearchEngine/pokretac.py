@@ -18,8 +18,8 @@ if __name__ == '__main__':
     resultSet = Set('')
     setSvihDatoteka = Set('')
     stablo = Tree()
-
-    stablo, g, setSvihDatoteka, recnikStranicaReci, unos = unosPutanje()
+    unesene_reci = ''
+    stablo, g, setSvihDatoteka, recnikStranicaReci, unos, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi = unosPutanje()
     while True:
         print("\n\t\t\t\t ------------------------------------- GLAVNI MENI -------------------------------------")
         print("\t\t\t\t\t1 - Prosta pretraga [ AND, OR, NOT - operatori].")
@@ -64,31 +64,11 @@ if __name__ == '__main__':
             #break
 
 
-        start1 = time.time()
-        V = g.vertices()
-        dokumentiKojiImajuLinkKaDokumentu = {}
-        bekLinkovi = {}
-        i = 0
-        for v in V:
-            # print(v)
-            backlinks = 0
-            a = []
-            for e in g.edges():
-                # print("\t\t"+str(e))
-                if str(v) == str(e._destination):
-                    a.append(str(e._origin))
-                    backlinks = backlinks + 1
-
-            dokumentiKojiImajuLinkKaDokumentu[str(v)] = a
-            bekLinkovi[str(v)] = backlinks
-        end1 = time.time()
-        print("Za nesto sto je bitno za rangiranje kosta " + str((end1 - start1).__round__(2)) + " sekundi.")
-
 
         if len(globalResultSet.elements) != 0:
         #Rangiranje i stampanje pretrage
             start = time.time()
-            rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi, unesene_reci,recnikStranicaReci)
+            rangiranSet = rangiranjePretrage(setSvihDatoteka,globalResultSet, dokumentiKojiImajuLinkKaDokumentu, bekLinkovi, unesene_reci,recnikStranicaReci)
             end = time.time()
             print("Za rangiranje pretrage je potrebno " + str((end - start).__round__(2)) + " sekundi.")
             paginacija(rangiranSet)
