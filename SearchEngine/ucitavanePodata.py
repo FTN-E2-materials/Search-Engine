@@ -49,6 +49,7 @@ def popunjavanjeStruktura(path):
 
 
 
+
     g = add_elements_to_Graph(E, directed)
     end = time.time()
     print("Parsed files and loaded the Trie and Graph structure in " + str((end - start).__round__(2)) + " seconds.")

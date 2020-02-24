@@ -48,9 +48,9 @@ def paginacija(setPod):
         print("\t\t\t\t\t 2 - Pomeri N stranica unapred.")
         print("\t\t\t\t\t 3 - Pomeri N stranica unazad.")
         print("\t\t\t\t\t 4 - Prikazi od trenutno pozicionirane stranice.")
-        print("\t\t\t\t\t x - Kraj.")
+        print("\t\t\t\t\t x - Nazad na glavni menis.")
         print("\t\t\t\t\t --------------------------------------------------------------------------")
-        meniUnos = input()
+        meniUnos = input("Unos[1, 2, 3, 4, x]: ")
         if meniUnos == str(1):
 
             unos2 = ''

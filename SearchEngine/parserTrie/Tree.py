@@ -149,7 +149,7 @@ def find_prefix(root, prefix: str):
                 break
         # Return False anyway when we did not find a char.
         if char_not_found:
-            return False, 0
+            return False, 0, node.setOfWord
     # Well, we are here means we have found the prefix. Return true to indicate that
     # And also the counter of the last node. This indicates how many words have this
     # prefix

@@ -1,5 +1,5 @@
 
-from pagination import paginacija
+from SearchEngine.pagination import paginacija
 from SearchEngine.parserTrie.findset import *
 
 from SearchEngine.set import *
