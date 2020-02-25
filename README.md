@@ -80,5 +80,20 @@ X: reci
 ```
 
 ## Rangiranje rezultata pretrage
-U izradi...
+Rangiranje rezultata pretrage se vrši tako što imamo više faktora koji utiču na rang, najbitnije stavke su:
+  - broj linkova iz drugih stranica na pronađenu stranicu
+  - broj pojavljivanja traženih reči na stranici
+  - broj traženih reči u stranicama koje sadrže link na traženu stranicu
 
+Težine ovih faktora su skalirane, tj. broj traženih reči na stranici nema isti uticaj na rangiranje kao broj linkova iz drugih stranica na pronađenu stranicu.
+Konkretno najveci uticaj na rangiranje imaju "beklinkovi" tj broj linkova iz drugih stranica na pronađenu stranicu.
+
+![image](https://user-images.githubusercontent.com/49925421/75282639-adb17d00-5811-11ea-8fd8-30e2bad27a2e.png)
+
+Formula po kojoj se odredjuje broj bodova za rangiranje izgleda ovako: 
+  rang = (beklinkovi*1) + (brojPojavljivanjaTrazenihReciNaTojStranici*0.7) + (brojponavljanjatrazenihReciNaStranicamaKojeLinkuju*0.4)
+  
+Iz formule jasno vidimo da najveci uticaj na rang imaju beklinkovi, zatim broj pojavljivanja traženih reči na stranici i na kraju 
+najmanji uticaj ima broj traženih reči u stranicama koje sadrže link na traženu stranicu, baš iz tog razloga imamo mnozenje tj skaliranje tog faktora sa 0.4. Na osnovu izracunatuh bodova tj ranga svake stranice vršimo paginaciju rezultata, osim putanja stranica prikazujemo korisniku i bodove rangiranja.
+
+![image](https://user-images.githubusercontent.com/49925421/75283804-cde23b80-5813-11ea-84fe-0e8d91e9a1cd.png)
