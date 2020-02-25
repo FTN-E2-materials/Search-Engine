@@ -1,7 +1,8 @@
 import os
 import time
-from parserGraph.Graph import *
-from parserGraph.Parser import Parser
+from SearchEngine.parserGraph.Graph import *
+from SearchEngine.parserGraph.Parser import Parser
+
 
 def loadGraphFromParser(path):
     directed = True
@@ -11,13 +12,7 @@ def loadGraphFromParser(path):
     #path = "C:\\Users\\Pufke\\Desktop\\OISISI-drugi-projektni-zadatak\\SearchEngine\\test-skup\\python-2.7.7-docs-html"
 
     start = time.time()
-    """
-        OS.Walk() prolazi kroz ceo zadati direktorijum i belezi imena fajlova, kao i path do njih. 
-        Zatim pomocu for petlje, uzimamo svaki .html fajl koji smo pronasli i parsiramo ga. 
-        Nakon sto isparsiramo svaki, u okviru polja parser.words ce se nalaziti Array Stringova koji predstavljaju 
-        reci. Taj Array onda prosledimo strukturi Trie, koja svaku rec ponaosob ubacuje u strukturu.
-        Loop se ponavlja za svaki .html fajl dok ne popunimo drvo u potpunosti.
-    """
+
 
     E = []
     link = ''

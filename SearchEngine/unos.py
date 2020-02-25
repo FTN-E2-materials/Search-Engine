@@ -1,10 +1,11 @@
 
-from pagination import paginacija
-from parserTrie.findset import *
+from SearchEngine.pagination import paginacija
+from SearchEngine.parserTrie.findset import *
 
-from set import *
-from parserTrie.Tree import *
-
+from SearchEngine.set import *
+from SearchEngine.parserTrie.Tree import *
+import fnmatch, re
+from SearchEngine.ucitavanePodata import popunjavanjeStruktura
 
 # function to get unique values
 def unique(list1):
@@ -20,21 +21,32 @@ def unique(list1):
 
 def pretraga(unesene_reci,stablo,unos):
     globalResultSet = Set('')
+    skupoviHTMLstranica = []
     if 'and' in unesene_reci:
         if len(unesene_reci) == 3:
             index = unesene_reci.index('and')
             unesene_reci.remove('and')
             """
             Preko indeksa znam koja 2 elementa iz liste, trebaju obavezno da budu prilikom pretrage.
-            t1,t2 - Tuple u kome cuvamo [uspesnost_trazenja, broj_pojavljivanja]
+            t1,t2 - Cuvamo dvojku [uspesnost_trazenja, broj_pojavljivanja]
             """
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
-            if (t1[0] == True and t2[0] == True):
-                set1 = nadjiSet(unos, unesene_reci[index - 1])
-                set2 = nadjiSet(unos, unesene_reci[index])
-                resultSet = set1.intersection(set2)
 
+            # for e in t1[2]:
+            #     print(e)
+
+            if (t1[0] == True and t2[0] == True):
+                #set1 = nadjiSet(unos, unesene_reci[index - 1])
+                #set2 = nadjiSet(unos, unesene_reci[index])
+
+                set1 = t1[2]
+                set2 = t2[2]
+                skupoviHTMLstranica.append(set1)
+                skupoviHTMLstranica.append(set2)
+
+                #resultSet = set1.intersection(set2)
+                resultSet = set1 & set2
                 globalResultSet = resultSet
                 #paginacija(resultSet)
             else:
@@ -46,9 +58,18 @@ def pretraga(unesene_reci,stablo,unos):
             index = unesene_reci.index('not')
             unesene_reci.remove('not')
 
-            set1 = nadjiSet(unos, unesene_reci[index - 1])
-            set2 = nadjiSet(unos, unesene_reci[index])
-            resultSet = set1.complement(set2)
+            t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+            t2 = find_prefix(stablo.root, unesene_reci[index])
+
+            # set1 = nadjiSet(unos, unesene_reci[index - 1])
+            # set2 = nadjiSet(unos, unesene_reci[index])
+            set1 = t1[2]
+            set2 = t2[2]
+
+            skupoviHTMLstranica.append(set1)
+            skupoviHTMLstranica.append(set2)
+            resultSet = set1 - set2
+            #resultSet = set1.complement(set2)
             globalResultSet = resultSet
 
             #paginacija(resultSet)
@@ -62,8 +83,16 @@ def pretraga(unesene_reci,stablo,unos):
             t1 = find_prefix(stablo.root, unesene_reci[index - 1])
             t2 = find_prefix(stablo.root, unesene_reci[index])
             if (t1[0] == True or t2[0] == True):
-                set1 = nadjiSet(unos,unesene_reci[index-1])
-                set2 = nadjiSet(unos,unesene_reci[index])
+                # set1 = nadjiSet(unos,unesene_reci[index-1])
+                # set2 = nadjiSet(unos,unesene_reci[index])
+                t1 = find_prefix(stablo.root, unesene_reci[index - 1])
+                t2 = find_prefix(stablo.root, unesene_reci[index])
+                set1 = t1[2]
+                set2 = t2[2]
+
+                skupoviHTMLstranica.append(set1)
+                skupoviHTMLstranica.append(set2)
+
                 resultSet = set1.union(set2)
                 globalResultSet = resultSet
             else:
@@ -79,9 +108,56 @@ def pretraga(unesene_reci,stablo,unos):
             t = find_prefix(stablo.root, unesene_reci[i])
             if (t[0] == True):
                 pojavljivane_reci.append(unesene_reci[i])
-                set = nadjiSet(unos,unesene_reci[i])
-                resultSet = resultSet.union(set)
+
+                #set = nadjiSet(unos,unesene_reci[i])
+                set = t[2]
+
+                skupoviHTMLstranica.append(set)
+                resultSet = resultSet | set
+                #resultSet = resultSet.union(set)
 
         globalResultSet = resultSet
 
     return globalResultSet
+
+def unosPutanje():
+    unos = ''
+    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
+    while unos == '':
+        regexPattern1 = fnmatch.translate('[A-Z]:\*')
+        regexPattern2 = fnmatch.translate('/*')
+        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
+        regexObj1 = re.compile(regexPattern1)
+        regexObj2 = re.compile(regexPattern2)
+        print("Unesite putanju korenskog direktorijuma u okviru kojeg zelite da pretrazujete:")
+        unos = input()
+        if unos != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
+            if regexObj1.match(unos) or regexObj2.match(unos):
+                print("Please wait...")
+                # stablo = loadTrieViaHTML(unos)
+                stablo, g, setSvihDatoteka, recnikStranicaReci,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi = popunjavanjeStruktura(unos)
+                # g = loadGraphFromParser(unos)
+
+            else:
+                print("Putanja nije validna!")
+                unos = ''
+    return stablo,g,setSvihDatoteka,recnikStranicaReci, unos, dokumentiKojiImajuLinkKaDokumentu, bekLinkovi
+
+def unosProstePretrage():
+    unosUpit = ''
+    # petlja ce da se izvrsava sve dok korisnik ne unese nesto
+    while unosUpit == '':
+        # Kompajlujemo objekat na kom kasnije mozemo da vrsimo regex metode
+        regexObj111 = re.compile("(([\w]+\s){1}(and|or|not){1}(\s[\w]+){1})|([\w\s]+)")
+
+        unosUpit = input("Unesite pretragu:")
+        unosUpit = unosUpit.strip().lower()
+        if unosUpit != '':  # Mora prvo ova provera zato sto regex.match puca ako mu se prosledi prazan string
+            if regexObj111.fullmatch(unosUpit):
+                print("Please wait...")
+            else:
+                print("Niste uneli validnu pretragu!")
+                unosUpit = ''
+
+    unesene_reci = unosUpit.split()
+    return unesene_reci

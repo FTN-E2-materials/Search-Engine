@@ -1,3 +1,4 @@
+from SearchEngine.set import *
 class Graph:
 
     def __init__(self, directed=False):
@@ -114,11 +115,19 @@ def add_elements_to_Graph(E, directed=True):
         (origin,destination,element).
   Podrazumeva se da se labele čvorova mogu hešovati.
   """
+    dokumentiKaDokumentuX = dict()
+    dokumentiKaKojimaDokumentXImaLink = dict()
+
+    cvoroviPocetka = dict()                     # dvojka [ dokumentX, listaDokumenata_koja_pokazuju_na_njega]
+    cvoroviKraja = dict()                       # dvojka [ dokumentX, listaDokumenata_ka_kojima_on_pokazuje]
+    bekLinkovi = {}
     g = Graph(directed)
-    V = set()
+    #V = set()
+    V = Set('')
     for e in E:
-        V.add(e[0])
-        V.add(e[1])
+        V.elements.append(e[0])
+        V.elements.append(e[1])
+
 
     vertices = {}  # izbegavamo ponavljanje labela između čvorova
     for v in V:
@@ -130,4 +139,39 @@ def add_elements_to_Graph(E, directed=True):
         element = e[2] if len(e) > 2 else None
         g.insert_edge(vertices[src], vertices[dest], element)
 
-    return g
+        if str(vertices[src]) not in cvoroviKraja:
+            #print(str(src) + "[source] nije u cvorovima kraja pa ga kreiramo")
+            cvoroviKraja[str(vertices[src])] = []
+            #bekLinkovi[str(dest)] = 1
+        #else:
+        #print(str(src) + "[source] je vec u cvorovima kraja, pa dodajemo njegove destination")
+        if str(vertices[dest]) not in cvoroviKraja[str(vertices[src])]:
+            cvoroviKraja[str(vertices[src])].append(str(vertices[dest]))
+            #bekLinkovi[str(dest)] += 1
+
+
+
+
+        if str(vertices[dest]) not in cvoroviPocetka:
+            cvoroviPocetka[str(vertices[dest])] = []              # pravimo listu cvorova kojima je on sve destination, tj listu onih koji pokazuju na dokument X
+            bekLinkovi[str(dest)] = 1
+        #else:
+        if str(vertices[src]) not in cvoroviPocetka[str(vertices[dest])]:
+            cvoroviPocetka[str(vertices[dest])].append(str(vertices[src]))
+            bekLinkovi[str(dest)]+=1
+
+
+        # ZA UBACIVANJE AKO ON SAM NA SEBE LINKUJE
+        if str(vertices[src]) not in cvoroviPocetka:
+            cvoroviPocetka[str(vertices[src])] = []              # pravimo listu cvorova kojima je on sve destination, tj listu onih koji pokazuju na dokument X
+            bekLinkovi[str(src)] = 1
+        #else:
+        if str(vertices[src]) not in cvoroviPocetka[str(vertices[src])]:
+            cvoroviPocetka[str(vertices[src])].append(str(vertices[src]))
+            bekLinkovi[str(src)]+=1
+
+
+
+    return g, cvoroviPocetka, bekLinkovi
+
+
