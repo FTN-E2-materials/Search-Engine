@@ -24,9 +24,33 @@ Nakon izbora pretrage, unosi se pretraga, odnosno vrsimo trazenje zeljenih reci 
 </p>
 
 ## Requirements
-Trenutna verzija ne zahteva nikakvo dodatno instaliranje vise od jedne biblioteke, stoga sve sto je potrebno je instalacija biblioteke [parglare](https://github.com/igordejanovic/parglare) i program se dalje pokrece modula **'pokretac.py'**
+Trenutna verzija ne zahteva nikakvo dodatno instaliranje vise od jedne biblioteke, stoga sve sto je potrebno je instalacija biblioteke [parglare](https://github.com/igordejanovic/parglare) i program se dalje pokrece preko pokretanja modula **'pokretac.py'**
 ```sh
 $ pip install parglare
+```
+
+U buducim verzijama, a i sada po vasem izboru mozete uz pozivanja requiments.txt fajla instalirati sve potrebne zavisnosti, odnosno:
+```sh
+$ pip install -r requirements.txt
+```
+## Preuzimanje aplikacije
+
+#### Kloniranjem repozitorijuma
+```sh
+$ git clone https://github.com/Pufke/OISISI-drugi-projektni-zadatak.git
+```
+#### Skidanje zipovanog projekta
+<p align="center">
+
+  <img width="700" height="243" src="https://user-images.githubusercontent.com/45834270/75288075-dcccec00-581b-11ea-89f4-a99e184367ac.png">
+
+</p>
+
+
+## Pokretanje aplikacije
+Potrebno je da se pozicionirate u okvir direktorijum vas_path/SearchEngine/ koji ste prethodno skinuli/klonovali. A potom na sledeci nacin mozete pokrenuti aplikaciju:
+```sh
+$ python pokretac.py
 ```
 
 
@@ -94,6 +118,6 @@ Formula po kojoj se odredjuje broj bodova za rangiranje izgleda ovako:
   rang = (beklinkovi * 1) + (brojPojavljivanjaTrazenihReciNaTojStranici * 0.7) + (brojponavljanjatrazenihReciNaStranicamaKojeLinkuju * 0.4)
   
 Iz formule jasno vidimo da najveci uticaj na rang imaju beklinkovi, zatim broj pojavljivanja traženih reči na stranici i na kraju 
-najmanji uticaj ima broj traženih reči u stranicama koje sadrže link na traženu stranicu, baš iz tog razloga imamo mnozenje tj skaliranje tog faktora sa 0.4. Na osnovu izracunatuh bodova tj ranga svake stranice vršimo paginaciju rezultata, osim putanja stranica prikazujemo korisniku i bodove rangiranja.
+najmanji uticaj ima broj traženih reči u stranicama koje sadrže link na traženu stranicu, baš iz tog razloga imamo mnozenje tj skaliranje tog faktora sa 0.4. Na osnovu izracunatuh bodova tj ranga svake stranice vršimo paginaciju rezultata, osim putanja stranica prikazujemo korisniku i bodove rangiranja.(otvori [sliku](https://user-images.githubusercontent.com/49925421/75283804-cde23b80-5813-11ea-84fe-0e8d91e9a1cd.png) za bolji pregled)
 
 ![image](https://user-images.githubusercontent.com/49925421/75283804-cde23b80-5813-11ea-84fe-0e8d91e9a1cd.png)

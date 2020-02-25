@@ -1,4 +1,4 @@
-from SearchEngine.set import *
+from set import *
 class Graph:
 
     def __init__(self, directed=False):

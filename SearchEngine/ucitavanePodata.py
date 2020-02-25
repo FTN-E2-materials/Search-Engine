@@ -1,13 +1,13 @@
 import os
 import time
 
-from SearchEngine.parserTrie.Tree import *
-from SearchEngine.parserTrie.Parser import Parser
-from SearchEngine.parserTrie.Tree import TreeNode
-from SearchEngine.parserGraph.Parser import Parser
-from SearchEngine.parserGraph.Graph import *
+from parserTrie.Tree import *
+from parserTrie.Parser import Parser
+from parserTrie.Tree import TreeNode
+from parserGraph.Parser import Parser
+from parserGraph.Graph import *
 #from .set import Set
-from SearchEngine.set import *
+from set import *
 def popunjavanjeStruktura(path):
     trie = Tree()
     parser = Parser()
@@ -47,5 +47,5 @@ def popunjavanjeStruktura(path):
 
     g,dokumentiKojiImajuLinkKaDokumentu,bekLinkovi = add_elements_to_Graph(E, directed)
     end = time.time()
-    print("Parsed files and loaded the Trie and Graph structure in " + str((end - start).__round__(2)) + " seconds.")
+    #print("Parsed files and loaded the Trie and Graph structure in " + str((end - start).__round__(2)) + " seconds.")
     return trie,g,setSvihDatoteka, recnikStranicaReci, dokumentiKojiImajuLinkKaDokumentu,bekLinkovi

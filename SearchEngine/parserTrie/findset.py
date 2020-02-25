@@ -1,7 +1,7 @@
 import os
 
 from .Parser import Parser
-from SearchEngine.set import Set
+from set import Set
 import time
 
 

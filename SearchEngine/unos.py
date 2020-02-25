@@ -1,11 +1,11 @@
 
-from SearchEngine.pagination import paginacija
-from SearchEngine.parserTrie.findset import *
+from pagination import paginacija
+from parserTrie.findset import *
 
-from SearchEngine.set import *
-from SearchEngine.parserTrie.Tree import *
+from set import *
+from parserTrie.Tree import *
 import fnmatch, re
-from SearchEngine.ucitavanePodata import popunjavanjeStruktura
+from ucitavanePodata import popunjavanjeStruktura
 
 # function to get unique values
 def unique(list1):

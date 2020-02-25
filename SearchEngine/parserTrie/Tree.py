@@ -3,7 +3,7 @@ Modul sadrži implementaciju stabla.
 """
 from queue import Queue
 from typing import Tuple
-from SearchEngine.set import *
+from set import *
 
 class TreeNode(object):
     """

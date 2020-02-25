@@ -2,11 +2,11 @@
 Modul koji predstavlja pokretacki deo aplikacije.
 """
 
-from SearchEngine.unos import *
-from SearchEngine.rangiranjePretrage import rangiranjePretrage
-from SearchEngine.pagination import *
-from SearchEngine.naprednap.napredna_pretraga import *
-from SearchEngine.unos import *
+from unos import *
+from rangiranjePretrage import rangiranjePretrage
+from pagination import *
+from naprednap.napredna_pretraga import *
+from unos import *
 import sys
 import time
 

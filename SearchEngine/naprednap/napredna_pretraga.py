@@ -1,7 +1,7 @@
 import parglare
 
-from SearchEngine.parserTrie.Tree import *
-from SearchEngine.set import *
+from parserTrie.Tree import *
+from set import *
 
 
 class Operacije:

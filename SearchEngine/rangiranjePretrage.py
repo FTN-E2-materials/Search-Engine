@@ -1,5 +1,5 @@
-from SearchEngine.quickSortMultiList import quickSort
-from SearchEngine.set import Set
+from quickSortMultiList import quickSort
+from set import Set
 import time
 
 brojPonavljanjaUnetihReci = {}
